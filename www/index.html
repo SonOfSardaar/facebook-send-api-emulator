@@ -1,1 +1,79 @@
-HELLO I AM STATIC HTML<script type="text/javascript" src="main.bundle.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Facebook Chat Emulator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha256-ZT4HPpdCOt2lvDkXokHuhJfdOKSPFLzeAJik5U/Q+l4=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="shortcut icon" type="image/ico" href="favicon.ico?v=3" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
+<script type="text/javascript" src="main.bundle.js"></script></head>
+<body>
+    <div class="container" ng-app="chatty">
+        <section ng-controller="chatController" class="chat-window">
+            <div class="messages">
+                <div ng-repeat="message in messages track by $index" class="chat-message" chat-message>
+
+                </div>
+                <div class="quick-replies">
+                    <span ng-repeat="button in quick_replies" class="button" ng-click="doPostback(button)">
+                        {{button.title || "Share Location"}}
+                    </span>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="dropup">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">☰</button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" ng-repeat="button in persistantMenu" ng-click="doPostback(button)">{{button.title}}</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#" ng-click="switchUser(1)">Switch User To: John Doe</a></li>
+                        <li><a href="#" ng-click="switchUser(2)">Switch User To: Jane Roe</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+                <input type="text" ng-model="textToSend" handle-enter="sendMessage(textToSend)" />
+                <span class="btn btn-primary pull-right" ng-click="sendMessage(textToSend)">Send</span>
+                <br />
+                <div class="controls">
+                    <button class="settings-button pull-right" ng-click="showSettingsDialog()" data-toggle="modal" data-target="#settingsDialog">.....</button>
+                    <button class="send-button pull-right" ng-click="sendRandomImage()">.....</button>
+                </div>
+            </div>
+
+            <div class="modal fade" id="settingsDialog" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group" ng-repeat="setting in settings">
+                                    <span class="btn btn-xs toggle-button" ng-class="{'btn-success':setting.enabled,'btn-danger':!setting.enabled}" ng-click="setting.enabled=!setting.enabled">
+                                        <span ng-if="setting.enabled">Enabled</span>
+                                        <span ng-if="!setting.enabled">Disabled</span>
+                                    </span>
+                                    <label class="form-control-label">{{setting.key}}</label>
+                                    <input type="text" class="form-control" ng-model="setting.value">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="discardChanges()">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="saveSettings()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</body>
+</html>

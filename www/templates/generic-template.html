@@ -1,0 +1,17 @@
+﻿<div class="attachment-message" ng-style="message.containerStyle">
+    <div ng-repeat="element in message.elements" class="generic-element">
+        <div background-image url="{{element.image_url}}">
+            
+        </div>
+        <div class="info">
+            <h3>{{element.title}}</h3>
+            <h4>{{element.subtitle}}</h4>
+            <h4>item.com</h4>
+        </div>
+        <div class="buttons">
+            <span ng-repeat="button in element.buttons" template-button ng-click="doPostback(button)">
+                {{button.title}}
+            </span>
+        </div>
+    </div>
+</div>
