@@ -19,7 +19,7 @@ const server=http.createServer(app);
 var webSocketServer=new WebSocket.Server({server})
 chatWorker.start(webSocketServer);
 
-app.use(express.static("www"))
+app.use(express.static("dist"))
 routes(app,config);
 
 server.listen(port);
