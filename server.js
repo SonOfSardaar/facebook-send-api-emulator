@@ -22,7 +22,6 @@ chatWorker.start(webSocketServer);
 app.use(express.static("www"))
 routes(app,config);
 
-//app.listen(port);
 server.listen(port);
 
 console.log('API server started on: ' + port);

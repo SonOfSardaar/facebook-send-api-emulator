@@ -1,28 +1,28 @@
 ﻿body {
     cursor: default;
-    font-size: 12px;
-    zoom: .8;
-    background-color: gray;
+    font-size: 12pt;
+    background-color:#dedede;
+    zoom:0.70
 }
 
-.container {
-    width: 494px;
-    height: 870px;
+.smartphone {
+    width: 520px;
+    height: 910px;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    background-image: url(images/iPhoneBg.jpg);
-    box-shadow: 10px 10px 6px dimgrey;
-    margin-top: 10px;
+    background-image: url(images/white-smartphone.png);
+    margin-top: 5px;
+}
+
+.chat-window{
+    margin: 90px 25px 0 22px;
 }
 
 .chat-window .messages {
-    height: 655px;
+    height: 673px;
     overflow-x: auto;
-    margin-top: 90px;
-    margin-bottom: 0px;
     font-size: 1.5em;
-    padding: 0px 5px;
 }
 
 
@@ -89,17 +89,14 @@
     word-wrap: break-word;
     display: inline-block;
     border-radius: 1em;
-    box-shadow: 3px 3px 5px dimgrey;
 }
 
 .bubble.with-buttons {
     border-bottom-left-radius:0;
     border-bottom-right-radius:0;
-    box-shadow: none;
 }
 
 .attachment-message {
-    box-shadow: 3px 3px 5px dimgrey;
     border-radius: 20px;
 }
 
@@ -110,7 +107,6 @@
 .echo-message .bubble {
     background: #0084ff;
     color: white;
-    box-shadow: none;
 }
 .bubble.button-template {
     width: 100%;

@@ -1,6 +1,11 @@
-const angular=require("angular");
+require("bootstrap/dist/css/bootstrap.min.css")
+require("bootstrap/dist/css/bootstrap-theme.min.css")
+//require("jquery/dist/jquery.min.js")
+//require("bootstrap/dist/js/bootstrap.min.js")
 
-const ChatController=require("./controllers/chatController") ;
+const angular = require("angular");
+
+const ChatController = require("./controllers/chatController");
 
 const chatty = angular.module("chatty", []);
 

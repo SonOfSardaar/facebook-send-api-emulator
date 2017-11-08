@@ -1,8 +1,8 @@
 ﻿body {
     cursor: default;
-    font-size: 12px;
-    zoom: .8;
-    background-color: black;
+    font-size: 12pt;
+    background-color:#dedede;
+    zoom:0.70
 }
 
 .smartphone {
