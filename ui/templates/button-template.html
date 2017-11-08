@@ -1,0 +1,8 @@
+﻿<div class="attachment-message">
+    <span class="bubble with-buttons button-template">{{message.text}}</span>
+    <div class="buttons">
+        <span template-button ng-repeat="button in message.buttons" ng-click="doPostback(button)">
+            {{button.title}}
+        </span>
+    </div>
+</div>

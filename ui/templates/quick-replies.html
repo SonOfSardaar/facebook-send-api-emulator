@@ -1,0 +1,8 @@
+﻿<div style="display:inline-block">
+    <span class="bubble">{{message.text}}</span>
+</div>
+<div class="quick-replies" ng-if="!message.clicked">
+    <span ng-repeat="button in message.quick_replies" class="button" ng-click="doPostback(button,message)">
+        {{button.title || "Share Location"}}
+    </span>
+</div>

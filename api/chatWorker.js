@@ -1,17 +1,21 @@
-const chatWorker = {
-    status: "idle"
+const users=require("./users");
+
+const chatWorker = {}
+
+chatWorker.send=function(model){
+    var json=JSON.stringify(model);
+    chatWorker.currentSocket.send(json);
+}
+
+chatWorker.sendActiveUser=function(){
+    var user=users.activeUser();
+    chatWorker.send(user);
 }
 
 chatWorker.start = function (server) {
     server.on("connection", socket => {
-        chatWorker.status="Connected!";
-
-        console.log("new socket connected")
-        socket.on("message", message => {
-            socket.send(message);
-        })
-
-        socket.send(chatWorker.status)
+        chatWorker.currentSocket=socket;   
+        chatWorker.sendActiveUser();     
     })
 }
 

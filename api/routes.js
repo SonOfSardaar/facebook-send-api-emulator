@@ -2,8 +2,9 @@ const chatWorker=require("./chatWorker");
 
 module.exports=function(app,config){
     var users=require("./users");
-    app.get("/status",(request,response)=>{
-        response.send(chatWorker.status);
+
+    app.post("/settings/user/:id", (request, response)=>{
+        //chatWorker.sendActiveUser();
     })
 
     app.get("/v2.6/me",function(request,response){
@@ -13,12 +14,11 @@ module.exports=function(app,config){
     })
 
     app.get("/v2.6/me/messages",function(request,response){
-        response.send({message:"Its a me MARIO!",config:config})
+        
     })
 
     app.get("/v2.6/accountLinking",function(request,response){
-        var authorizationCode=request.query.authorization_code;
-        response.send({message:"Its a me MARIO!",config:config})
+        var authorizationCode=request.query.authorization_code;        
     })
 
     app.get("/v2.6/:psid",function(request,response){
