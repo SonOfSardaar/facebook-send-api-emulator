@@ -1,16 +1,12 @@
 const chatWorker=require("./chatWorker");
+const users=require("./users");
 
 module.exports=function(app,config){
     var users=require("./users");
 
-    app.post("/settings/user/:id", (request, response)=>{
-        //chatWorker.sendActiveUser();
-    })
-
-    app.get("/v2.6/me",function(request,response){
-        var psid="1663671807007534";//actually get it from page access token
-        var user=users.get("1663671807007534");
-        response.send(user)
+    app.post("/settings/user/:psid", (request, response)=>{
+        users.activate(request.params.psid)
+        chatWorker.sendActiveUser();
     })
 
     app.post("/v2.6/me/messages",function(request,response){
@@ -26,6 +22,7 @@ module.exports=function(app,config){
     app.get("/v2.6/:psid",function(request,response){
         var psid=request.params.psid;
         var user=users.get(psid);
+        console.log("user resolved " + psid, user);
         response.send(user)
     })
 }
