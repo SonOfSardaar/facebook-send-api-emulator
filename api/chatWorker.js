@@ -1,8 +1,10 @@
 const users=require("./users");
-const webHook=require("./webHook")
+const WebHook=require("./webHook")
 
 function ChatWorker(){
     const base=this;
+    const webHook=new WebHook(this);
+    
     base.send=function(model){
         var json=JSON.stringify(model);
         base.socket.send(json);

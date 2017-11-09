@@ -13,8 +13,10 @@ module.exports=function(app,config){
         response.send(user)
     })
 
-    app.get("/v2.6/me/messages",function(request,response){
-        
+    app.post("/v2.6/me/messages",function(request,response){
+        console.log(request.body);
+        chatWorker.send(request.body);
+        response.send("OK");
     })
 
     app.get("/v2.6/accountLinking",function(request,response){

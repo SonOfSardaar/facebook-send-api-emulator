@@ -1,8 +1,8 @@
 ﻿body {
     cursor: default;
     font-size: 12pt;
-    background-color:#dedede;
-    zoom:0.70
+    background-color:white;
+    zoom:0.80
 }
 
 .smartphone {
@@ -16,7 +16,7 @@
 }
 
 .chat-window{
-    margin: 90px 25px 0 22px;
+    margin: 90px 20px 0 22px;
 }
 
 .chat-window .messages {
@@ -77,10 +77,10 @@
     display: inline-block;
 }
 .bubble {
-    background-color: #f1f0f0;
-    border: 1px solid #f1f0f0;
+    background-color: #e5e5e5;
+    border: 1px solid #e5e5e5;
     color: rgba(0, 0, 0, 1);
-    margin: 1px 0;
+    margin: 1px;
     padding: 6px 12px;
     box-sizing: border-box;
     clear: left;
@@ -122,6 +122,7 @@
 .chat-message {
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-right:5px;
 }
 
 .button-template-message,

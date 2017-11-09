@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const http=require("http");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const bodyParser = require("body-parser");
 const routes = require("./api/routes");
 const WebSocket=require("ws");
