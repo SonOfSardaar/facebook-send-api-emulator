@@ -1,22 +1,28 @@
 const users=require("./users");
+const webHook=require("./webHook")
 
-const chatWorker = {}
+function ChatWorker(){
+    const base=this;
+    base.send=function(model){
+        var json=JSON.stringify(model);
+        base.socket.send(json);
+    },
 
-chatWorker.send=function(model){
-    var json=JSON.stringify(model);
-    chatWorker.currentSocket.send(json);
+    base.sendActiveUser=function(){
+        var user=users.activeUser();
+        base.send(user);
+    }
+
+    base.start = function (server) {
+        server.on("connection", socket => {
+            base.socket=socket;
+            socket.on("message",message=>{
+                var object=JSON.parse(message);
+                webHook.dispatch(object);
+            })   
+            base.sendActiveUser();     
+        })
+    }
 }
 
-chatWorker.sendActiveUser=function(){
-    var user=users.activeUser();
-    chatWorker.send(user);
-}
-
-chatWorker.start = function (server) {
-    server.on("connection", socket => {
-        chatWorker.currentSocket=socket;   
-        chatWorker.sendActiveUser();     
-    })
-}
-
-module.exports = chatWorker;
+module.exports = new ChatWorker();
