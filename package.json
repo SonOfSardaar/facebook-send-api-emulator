@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack && nodemon server.js"
+    "start": "nodemon server.js",
+    "build":"webpack"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +25,7 @@
     "axios": "^0.17.0",
     "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
+    "diskdb": "^0.1.17",
     "express": "^4.16.2",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
