@@ -33,10 +33,10 @@
 .chat-window .btn-link {
     font-size: 1.5em;
 }
+
 .dropdown-toggle {
     font-size: 1.5em;
     padding: 0 10px;
-    margin-top: -5px;
 }
 .chat-window .footer input {
     border: 1px solid #DDDDDD;
@@ -45,37 +45,28 @@
     border-radius: 0.5em;
     line-height: 1.5em;
     box-shadow: inset 2px 2px 5px dimgrey;
+    margin-left:0.2em;
 }
 
 .footer .btn-primary{
-    line-height: 1.5em;
+    margin-top:.1em;
 }
 
 .controls button {
     background: #000000;
-    opacity: 0.1;
-    padding: 5px 20px;
+    opacity: 0.5;
     border: 1px solid silver;
 }
 
 .controls button:hover {
     background: #0084ff;
 }
+
 .controls {
-    line-height: 35px;
-    padding: 15px 0;
+    margin: 1em;
+    margin-top:2em;    
 }
 
-.controls .settings-button {
-    margin-right: 70px;
-}
-
-.controls .send-button {
-    margin-right: 145px
-}
-.footer .dropup {
-    display: inline-block;
-}
 .bubble {
     background-color: #e5e5e5;
     border: 1px solid #e5e5e5;

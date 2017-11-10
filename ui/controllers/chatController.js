@@ -1,25 +1,31 @@
-const ChatMessage=require("../models/chatMessage");
-const images=require("../data/imageList");
-const persistantMenu=require("../services/persistantMenu");
+const ChatMessage = require("../models/chatMessage");
+const images = require("../data/imageList");
 
 module.exports = function ($http, $scope, config) {
     var socket = new WebSocket(config.webSocketUrl);
     $scope.messages = [];
-    $scope.persistantMenu = persistantMenu.items;
-    
+    $scope.persistantMenu = [];
+
     showMessage("Connecting...");
 
     socket.onmessage = function (event) {
         $scope
             .$apply(function (scope) {
                 var model = JSON.parse(event.data);
-                if (model.first_name) {
-                    $scope.user = model;
-                    showMessage("hello " + model.first_name);
-                    return;
+
+                if (model.user) {
+                    var user = model.user
+                    $scope.user = user;
+                    showMessage("hello " + user.first_name);
+                }
+
+                if (model.persistent_menu) {
+                    $scope.persistantMenu = model.persistent_menu;
                 }
 
                 $scope.quick_replies = [];
+
+                if(!model.message) return;
                 $scope
                     .messages
                     .push(new ChatMessage(model).identify($scope));
@@ -92,7 +98,6 @@ module.exports = function ($http, $scope, config) {
                 $scope.settings = response.data;
             });
     }
-   
 
     $scope.sendRandomImage = function () {
         var index = Math.ceil(Math.random() * images.length) - 1;

@@ -5,7 +5,7 @@ function MessengerUser(id){
     this.id=id;
 }
 
-function CallbackFactory(psid) {
+module.exports = function CallbackFactory(psid) {
     const base = this;
     var psid = psid;
     var callback = {

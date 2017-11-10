@@ -20,22 +20,22 @@
             </div>
             <div class="footer">
                 <div class="dropup">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">☰</button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#" ng-repeat="button in persistantMenu" ng-click="doPostback(button)">{{button.title}}</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#" ng-click="switchUser(1)">Switch User To: John Doe</a></li>
-                        <li><a href="#" ng-click="switchUser(2)">Switch User To: Jane Roe</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Feedback</a></li>
-                    </ul>
+                    <button class="btn btn-default dropdown-toggle pull-left" type="button" data-toggle="dropdown">☰</button>
+                    <persistent-menu menu="persistantMenu"/>
                 </div>
                 <input type="text" ng-model="textToSend" handle-enter="sendMessage(textToSend)" />
                 <span class="btn btn-primary pull-right" ng-click="sendMessage(textToSend)">Send</span>
                 <br />
-                <div class="controls">
-                    <button class="settings-button pull-right" ng-click="showSettingsDialog()" data-toggle="modal" data-target="#settingsDialog">.....</button>
-                    <button class="send-button pull-right" ng-click="sendRandomImage()">.....</button>
+                <div class="controls dropup">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">☰</button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" ng-click="switchUser(1)">Switch User To: John Doe</a></li>
+                            <li><a href="#" ng-click="switchUser(2)">Switch User To: Jane Roe</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" ng-click="sendRandomImage()">Send Random Image</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" ng-click="showSettingsDialog()" data-toggle="modal" data-target="#settingsDialog">Settings</a></li>                            
+                        </ul>
                 </div>
             </div>
 
