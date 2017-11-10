@@ -23,7 +23,13 @@ module.exports = function (app, config) {
 
         if (model.get_started) 
             database.saveData("get_started",model.get_started);
+
+        if (model.greeting) 
+            database.saveData("greeting",model.greeting);
         
+        if(model.whitelisted_domains)
+            database.saveData("whitelisted_domains",model.whitelisted_domains);
+            
         response.send({result:"success"});
     })
 
