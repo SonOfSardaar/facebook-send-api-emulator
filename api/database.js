@@ -1,17 +1,26 @@
-function Database(){
-    const base=this;
-    const db = require('diskdb');
-    db.connect("./db", ["messengerProfile"]);
+function Database() {
+    const base = this;
+    const jsonFile=require("jsonfile");
     
-    this.savePersistantMenu=function(data){
-        db.messengerProfile.remove({persistant_menu:{}});
-        db.messengerProfile.save({persistent_menu:data});
+    var data={};
+    var dataFile="./db/data.json";
+    try{
+        data=jsonFile.readFileSync(dataFile);
+    }catch(error){
+        console.log(error);
     }
 
-    this.getPersistentMenu= function(){
-        var model= db.messengerProfile.findOne({persistant_menu:{}});
-        return model;
+    this.saveData = function (field, value) {
+        data[field]=value;
+        jsonFile.writeFile(dataFile, data,{spaces:2},error=>{
+            const message=error|| (field + " saved");
+            console.log(message);
+        });
+    }
+
+    this.getData = function (field) {
+        return data[field];
     }
 }
 
-module.exports=new Database();
+module.exports = new Database();

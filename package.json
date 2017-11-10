@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
-    "build":"webpack"
+    "start": "nodemon server.js --watch api",
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
@@ -25,9 +25,9 @@
     "axios": "^0.17.0",
     "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
-    "diskdb": "^0.1.17",
     "express": "^4.16.2",
     "jquery": "^3.2.1",
+    "jsonfile": "^4.0.0",
     "lodash": "^4.17.4",
     "uuid": "^3.1.0",
     "webpack": "^3.8.1",
