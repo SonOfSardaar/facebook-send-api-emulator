@@ -3,7 +3,7 @@ function Database() {
     const jsonFile=require("jsonfile");
     
     var data={};
-    var dataFile="./db/data.json";
+    var dataFile="./data.json";
     try{
         data=jsonFile.readFileSync(dataFile);
     }catch(error){

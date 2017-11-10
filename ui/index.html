@@ -21,7 +21,7 @@
             <div class="footer">
                 <div class="dropup">
                     <button class="btn btn-default dropdown-toggle pull-left" type="button" data-toggle="dropdown">☰</button>
-                    <persistent-menu menu="persistantMenu"/>
+                    <dropdown-menu menu="persistantMenu.call_to_actions" item-select="doPostback"/>
                 </div>
                 <input type="text" ng-model="textToSend" handle-enter="sendMessage(textToSend)" />
                 <span class="btn btn-primary pull-right" ng-click="sendMessage(textToSend)">Send</span>

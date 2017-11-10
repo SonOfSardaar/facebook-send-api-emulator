@@ -38,6 +38,16 @@
     font-size: 1.5em;
     padding: 0 10px;
 }
+
+.dropdown-menu>li>a{
+    margin:0 1px;
+}
+
+.dropdown-submenu:hover > .dropdown-menu{
+    left: 90%;
+    display: block;
+    bottom: 0;
+}
 .chat-window .footer input {
     border: 1px solid #DDDDDD;
     width: 75%;
@@ -56,6 +66,7 @@
     background: #000000;
     opacity: 0.5;
     border: 1px solid silver;
+    line-height:1.7em;
 }
 
 .controls button:hover {

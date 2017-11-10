@@ -12,11 +12,11 @@ module.exports = function WebHook(chatWorker) {
   const webHookUrl = config.webHookUrl;
 
   base.dispatch = function (message) {
+    return;
     console.log("dispatching:", message.type);
     var activeUser = users.activeUser();
     const callbackFactory = new CallbackFactory(activeUser.pageScopeId);
     const callback = callbackFactory.createCallback(message);
-
     var json = JSON.stringify(callback);
     console.log("posting", json)
     var hash = crypto.createHmac("sha1", appSecret).update(json).digest("hex");

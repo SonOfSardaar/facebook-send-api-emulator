@@ -4,7 +4,7 @@ const images = require("../data/imageList");
 module.exports = function ($http, $scope, config) {
     var socket = new WebSocket(config.webSocketUrl);
     $scope.messages = [];
-    $scope.persistantMenu = [];
+    $scope.persistantMenu = {};
 
     showMessage("Connecting...");
 
@@ -20,7 +20,7 @@ module.exports = function ($http, $scope, config) {
                 }
 
                 if (model.persistent_menu) {
-                    $scope.persistantMenu = model.persistent_menu;
+                    $scope.persistantMenu = model.persistent_menu[0];
                 }
 
                 $scope.quick_replies = [];
@@ -121,12 +121,15 @@ module.exports = function ($http, $scope, config) {
     }
 
     $scope.doPostback = function (button, message) {
+        if(!button) return;
+        if(button.type==="nested") return;
+        
         $scope.quick_replies = [];
 
         if ((message || {}).type === "quick-replies") 
             message.clicked = true;
         
-        if (!button.type) 
+        if (!button.url) 
             echo(button.title);
         
         sendJson({
