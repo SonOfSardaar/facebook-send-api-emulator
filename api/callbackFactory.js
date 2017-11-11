@@ -1,56 +1,58 @@
 const config = require("../config");
 const uuidv1 = require('uuid/v1');
 
-function MessengerUser(id){
-    this.id=id;
-}
-
 module.exports = function CallbackFactory(psid) {
-    const base = this;
-    var psid = psid;
+  const base = this;
+  var psid = psid;
+
+  base.createCallback = function (message) {
+    var callbackData = {
+      recipient: {
+        id: config.pageScopeId
+      },
+      sender: {
+        id: psid
+      },
+      timestamp: Date.now(),
+      message: {
+        mid: "mid.12345678:" + uuidv1()
+      }
+    };
+
+    if (message.type === "text")
+      callbackData.message.text = message.text;
+    else if (message.type === "quickReply") {
+      Object.assign(callbackData.message, {
+        text: message.text,
+        quick_reply: {
+          payload: message.payload
+        }
+      })
+    } else if (message.type === "image") {
+      Object.assign(callbackData.message, {
+        attachments: [{
+          payload: {
+            url: message.paylod
+          }
+        }]
+      })
+    } else {
+      Object.assign(callbackData, {
+        postback: {
+          payload: message.payload
+        }
+      })
+    }
+
     var callback = {
       object: "page",
-      entry: [
-        {
-          id: uuidv1(),
-          time: Date.now(),
-          messaging: []
-        }
-      ]
+      entry: [{
+        id: uuidv1(),
+        time: Date.now(),
+        messaging: [callbackData]
+      }]
     };
   
-    base.createCallback = function (message) {
-      var callbackData = {
-        recipient : new MessengerUser(config.pageScopeId),
-        sender : new MessengerUser(psid),
-        timestamp : Date.now(),
-        message:{ mid: "mid.12345678:" + uuidv1() }
-      };
-      if (message.type === "text") 
-        callbackData.extend({text: message.text});
-      else if (message.type === "quickReply") {
-        callbackData.extend({
-          text: message.text,
-          quick_reply: {
-            payload: message.payload
-          }
-        })
-      } else if (message.type === "image") {
-        callbackData.extend({
-          attachments: [
-            {
-              payload: {
-                url: message.paylod
-              }
-            }
-          ]
-        })
-      } else {
-        callbackData.extend({
-          postback: {
-            payload: message.payload
-          }
-        })
-      }
-    }  
+    return callback;
   }
+}

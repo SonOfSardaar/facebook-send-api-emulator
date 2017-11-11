@@ -12,7 +12,6 @@ module.exports = function WebHook(chatWorker) {
   const webHookUrl = config.webHookUrl;
 
   base.dispatch = function (message) {
-    return;
     console.log("dispatching:", message.type);
     var activeUser = users.activeUser();
     const callbackFactory = new CallbackFactory(activeUser.pageScopeId);

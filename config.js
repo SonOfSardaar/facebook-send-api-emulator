@@ -1,6 +1,6 @@
 module.exports = {
-    webHookUrl: process.env["SendApi.WebHookUrl"],
-    pageScopeId: process.env["SendApi.PageScopeId"] || "5436671887007625",
-    appSecret: process.env["SendApi.AppSecret"],
+    webHookUrl: process.env["SendApi.WebHookUrl"] || "SET AS ENV VAR",
+    pageScopeId: process.env["SendApi.PageScopeId"] || "SET AS ENV VAR",
+    appSecret: process.env["SendApi.AppSecret"] || "SET AS ENV VAR",
     port: process.env["SendApi.Port"]
 };

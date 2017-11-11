@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <title>Facebook Chat Emulator</title>
     <link rel="shortcut icon" type="image/ico" href="favicon.ico?v=3" />
- </head>
+</head>
+
 <body>
     <div class="smartphone container" ng-app="chatty">
         <section ng-controller="chatController" class="chat-window">
@@ -21,54 +23,31 @@
             <div class="footer">
                 <div class="dropup">
                     <button class="btn btn-default dropdown-toggle pull-left" type="button" data-toggle="dropdown">☰</button>
-                    <dropdown-menu menu="persistantMenu.call_to_actions" item-select="doPostback"/>
+                    <dropdown-menu menu="persistantMenu.call_to_actions" item-select="doPostback" />
                 </div>
                 <input type="text" ng-model="textToSend" handle-enter="sendMessage(textToSend)" />
                 <span class="btn btn-primary pull-right" ng-click="sendMessage(textToSend)">Send</span>
                 <br />
                 <div class="controls dropup">
-                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">☰</button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" ng-click="switchUser(1)">Switch User To: John Doe</a></li>
-                            <li><a href="#" ng-click="switchUser(2)">Switch User To: Jane Roe</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#" ng-click="sendRandomImage()">Send Random Image</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#" ng-click="showSettingsDialog()" data-toggle="modal" data-target="#settingsDialog">Settings</a></li>                            
-                        </ul>
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">☰</button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" ng-click="switchUser(1)">Switch User To: John Doe</a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="switchUser(2)">Switch User To: Jane Roe</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#" ng-click="sendRandomImage()">Send Random Image</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-
-            <div class="modal fade" id="settingsDialog" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group" ng-repeat="setting in settings">
-                                    <span class="btn btn-xs toggle-button" ng-class="{'btn-success':setting.enabled,'btn-danger':!setting.enabled}" ng-click="setting.enabled=!setting.enabled">
-                                        <span ng-if="setting.enabled">Enabled</span>
-                                        <span ng-if="!setting.enabled">Disabled</span>
-                                    </span>
-                                    <label class="form-control-label">{{setting.key}}</label>
-                                    <input type="text" class="form-control" ng-model="setting.value">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="discardChanges()">Close</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="saveSettings()">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    </div>
+    </section>
     </div>
 
 </body>
+
 </html>

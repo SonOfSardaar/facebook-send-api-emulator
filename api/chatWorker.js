@@ -19,6 +19,12 @@ function ChatWorker(){
         base.send(data);
     }
 
+    base.sendActiveUser=function(){
+        var user=users.activeUser();
+        var data={user};
+        base.send(data);
+    }
+
     base.start = function (server) {
         server.on("connection", socket => {
             base.socket=socket;

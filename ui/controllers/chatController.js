@@ -86,19 +86,6 @@ module.exports = function ($http, $scope, config) {
         socket.send(json);
     }
 
-    $scope.showSettingsDialog = function () {
-        $http
-            .get(config.serviceUrl + "/settings")
-            .then(function (response) {
-                if (response.status !== 200) {
-                    showMessage("could not get settings. " + response.statusText);
-                    return;
-                }
-
-                $scope.settings = response.data;
-            });
-    }
-
     $scope.sendRandomImage = function () {
         var index = Math.ceil(Math.random() * images.length) - 1;
         var url = images[index];
@@ -106,24 +93,10 @@ module.exports = function ($http, $scope, config) {
         echoImage(url);
     }
 
-    $scope.discardChanges = function () {
-        $scope.settings = [];
-    }
-
-    $scope.saveSettings = function () {
-        $http
-            .put(config.serviceUrl + "/settings", $scope.settings)
-            .then(function (response) {
-                showMessage("settings saved");
-            }, function (response) {
-                showMessage("could not save settings. " + response.status);
-            });
-    }
-
     $scope.doPostback = function (button, message) {
         if(!button) return;
         if(button.type==="nested") return;
-        
+
         $scope.quick_replies = [];
 
         if ((message || {}).type === "quick-replies") 
@@ -144,5 +117,6 @@ module.exports = function ($http, $scope, config) {
             .put(config.serviceUrl + "/settings/user/" + id)
             .then(function () {});
     }
+    
     $scope.sendMessage = sendMessage;
 }

@@ -5,7 +5,7 @@ const database = require("./database");
 module.exports = function (app, config) {
     var users = require("./users");
 
-    app.post("/settings/user/:psid", (request, response) => {
+    app.put("/settings/user/:psid", (request, response) => {
         users.activate(request.params.psid)
         chatWorker.sendActiveUser();
     })
