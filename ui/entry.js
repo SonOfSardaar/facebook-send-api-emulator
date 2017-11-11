@@ -14,11 +14,10 @@ chatty.factory("config", require("./factories/configFactory"));
 chatty.filter("url", require("./filters/urlFilter"));
 
 chatty.directive("chatMessage", require("./directives/chatMessage"));
-
 chatty.directive("handleEnter", require("./directives/handleEnter"))
-
 chatty.directive("backgroundImage", require("./directives/backgroundImage"));
-
 chatty.directive("templateButton", require("./directives/templateButton"));
+chatty.directive("dropdownMenu", require("./directives/dropdownMenu"));
+chatty.directive("hrefTarget", require("./directives/hrefTarget"));
 
 chatty.controller("chatController", ["$http", "$scope", "config", ChatController]);

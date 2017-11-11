@@ -6,6 +6,7 @@ module.exports = function(model) {
     message.type = "unknown";
 
     this.identify = function (scope) {
+        if(!model.message) return message;
 
         if (model.message.type === "echo") {
             message.type = "echo";

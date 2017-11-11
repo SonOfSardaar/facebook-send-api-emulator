@@ -1,5 +1,6 @@
 const users=require("./users");
 const WebHook=require("./webHook")
+const database=require("./database");
 
 function ChatWorker(){
     const base=this;
@@ -10,9 +11,18 @@ function ChatWorker(){
         base.socket.send(json);
     },
 
+    base.sendInitialData=function(){
+        var user=users.activeUser();
+        var persistent_menu=database.getData("persistent_menu");
+        
+        var data={user,persistent_menu};
+        base.send(data);
+    }
+
     base.sendActiveUser=function(){
         var user=users.activeUser();
-        base.send(user);
+        var data={user};
+        base.send(data);
     }
 
     base.start = function (server) {
@@ -22,7 +32,8 @@ function ChatWorker(){
                 var object=JSON.parse(message);
                 webHook.dispatch(object);
             })   
-            base.sendActiveUser();     
+            
+            base.sendInitialData();
         })
     }
 }

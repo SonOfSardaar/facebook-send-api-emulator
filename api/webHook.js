@@ -1,89 +1,43 @@
 const axios = require("axios");
 const uuidv1 = require('uuid/v1');
 const crypto = require("crypto");
+const users = require("./users");
+const config = require("../config");
+const CallbackFactory = require("./callbackFactory");
 
 module.exports = function WebHook(chatWorker) {
   const base = this;
+  const pageScopeId = config.pageScopeId;
+  const appSecret = config.appSecret;
+  const webHookUrl = config.webHookUrl;
+
   base.dispatch = function (message) {
-    console.log("dispatching:", message);
-
-    const callbackData = {
-      recipient: {
-        id: "1527809300625543"
-      },
-      sender: {
-        id: "1663671807007534"
-      },
-      timestamp: Date.now()
-    };
-
-    if (message.type === "text") 
-      Object.assign(callbackData, {
-        message:{
-          mid: "mid.12345678:" + uuidv1(),
-          text: message.text}
-      })
-    else if (message.type === "quickReply") {
-      Object.assign(callbackData, {
-        message:{
-          text: message.text,
-          mid: "mid.12345678:" + uuidv1(),
-          quick_reply: {
-            payload: message.payload
-          }
-        }
-      })
-    } else if (message.type === "image") {
-      Object.assign(callbackData, {
-        message: {
-          mid: "mid.12345678." + uuidv1(),
-          attachments: [
-            {
-              payload: {
-                url: message.paylod
-              }
-            }
-          ]
-        }
-      })
-    } else {
-      Object.assign(callbackData, {
-        postback: {
-          payload: message.payload
-        }
-      })
-    }
-
-    const callback = {
-      object:"page",
-      entry: [
-        {
-          id: uuidv1(),
-          time: Date.now(),
-          messaging: [callbackData]
-        }
-      ]
-    };
-
-    var json=JSON.stringify(callback);
-    var hash=crypto.createHmac("sha1","ec593732a9ae9748451e9527c4d1a9e3").update(json).digest("hex");
-//"http://localhost:9191/customer/converse/v1/channels/facebook/conversation", callback
+    console.log("dispatching:", message.type);
+    var activeUser = users.activeUser();
+    const callbackFactory = new CallbackFactory(activeUser.pageScopeId);
+    const callback = callbackFactory.createCallback(message);
+    var json = JSON.stringify(callback);
+    console.log("posting", json)
+    var hash = crypto.createHmac("sha1", appSecret).update(json).digest("hex");
+    
     axios({
-      method:"post",
-      url:"http://localhost:9191/customer/converse/v1/channels/facebook/conversation",
-      data:callback,
-      headers:{"X-Hub-Signature":"sha1=" + hash}}).then(response => {
-        console.log(response.statusText);
-      })
-      .catch(error => {
-        console.log(error.response.statusText);
+      method: "post",
+      url: webHookUrl,
+      data: callback,
+      headers: {
+        "X-Hub-Signature": "sha1=" + hash
+      }
+    }).then(response => {
+      console.log(response.statusText);
+    }).catch(error => {
+      console.log(error.response.statusText);
 
-        var response = {
-          type: "text",
-          text: error.response.statusText
-        }
+      var response = {
+        type: "text",
+        text: error.response.statusText
+      }
 
-        chatWorker.send({message:response});
-      });
+      chatWorker.send({message: response});
+    });
   }
 }
