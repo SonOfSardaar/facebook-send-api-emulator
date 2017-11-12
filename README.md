@@ -24,6 +24,6 @@ in command prompt navigate to your folder where you have cloned this repo, run t
 
 >`>npm start`  [this will start your send api emulator]
 
-now you can browse your emulated messenger on http://localhost:<port>]
+now you can browse your emulated messenger on http://localhost:3000]
 
-and you your api (SendAPI / Messenger Platform) will be litening on http://localhost:<port>/v2.6
+and you your api (SendAPI / Messenger Platform) will be litening on http://localhost:3000/v2.6
