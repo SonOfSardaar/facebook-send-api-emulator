@@ -2,13 +2,8 @@ const chatWorker = require("./chatWorker");
 const users = require("./users");
 const database = require("./database");
 
-module.exports = function (app, config) {
+module.exports = function (app) {
     var users = require("./users");
-
-    app.put("/settings/user/:psid", (request, response) => {
-        users.activate(request.params.psid)
-        chatWorker.sendActiveUser();
-    })
 
     app.post("/v2.6/me/messages", function (request, response) {
         console.log(request.body);

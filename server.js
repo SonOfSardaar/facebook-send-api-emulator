@@ -2,9 +2,10 @@ const config=require("./config");
 const express = require('express');
 const app = express();
 const http=require("http");
-const port = config.port || 3000;
+const port = config.port;
 const bodyParser = require("body-parser");
-const routes = require("./api/routes");
+const sendApiRoutes = require("./api/sendApiRoutes");
+const sampleWebhookRoutes = require("./api/sampleWebhookRoutes");
 const WebSocket=require("ws");
 const chatWorker=require("./api/chatWorker");
 
@@ -16,7 +17,9 @@ var webSocketServer=new WebSocket.Server({server})
 chatWorker.start(webSocketServer);
 
 app.use(express.static("dist"))
-routes(app);
+
+sendApiRoutes(app);
+sampleWebhookRoutes(app,config);
 
 server.listen(port);
 
