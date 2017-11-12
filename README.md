@@ -26,4 +26,4 @@ in command prompt navigate to your folder where you have cloned this repo, run t
 
 now you can browse your emulated messenger on http://localhost:3000
 
-and you your api (SendAPI / Messenger Platform) will be litening on http://localhost:3000/v2.6
+and you your api (SendAPI / Messenger Platform) will be listening on http://localhost:3000/v2.6
