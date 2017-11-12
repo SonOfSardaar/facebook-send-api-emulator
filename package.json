@@ -8,8 +8,17 @@
     "start": "nodemon server.js --watch api",
     "build": "webpack"
   },
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "facebook",
+    "messenger",
+    "graph",
+    "api",
+    "platform",
+    "send",
+    "fb"
+  ],
+  "author": "Gurpreet Singh",
+  "license": "MIT",
   "devDependencies": {
     "copy-webpack-plugin": "^4.2.0",
     "css-loader": "^0.28.7",
