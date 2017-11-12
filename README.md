@@ -19,9 +19,9 @@ you need following information in hand before you can use this emulator
 Once you have all these items, add these to your system variables with same names as above.
 
 in command prompt navigate to your folder where you have cloned this repo, run the following commands
->>webpack    [this is to build the html ui of the emulator]
+>`>webpack`    [this is to build the html ui of the emulator]
 
->>npm start  [this will start your send api emulator]
+>`>npm start`  [this will start your send api emulator]
 
 now you can browse your emulated messenger on http://localhost:<port>]
 
