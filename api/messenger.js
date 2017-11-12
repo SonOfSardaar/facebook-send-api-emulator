@@ -7,14 +7,14 @@ function FacebookMessenger(endpointUrl, token) {
         this.sendMessage(id, action)
     }
 
-    this.sendTextMessage = function (id, text, cb) {
+    this.sendTextMessage = function (id, text) {
         const messageData = {
             text: text
         }
-        this.sendMessage(id, messageData, cb)
+        this.sendMessage(id, messageData)
     }
 
-    this.sendImageMessage = function (id, imageURL, cb) {
+    this.sendImageMessage = function (id, imageURL) {
         const messageData = {
             'attachment': {
                 'type': 'image',
@@ -23,10 +23,10 @@ function FacebookMessenger(endpointUrl, token) {
                 }
             }
         }
-        this.sendMessage(id, messageData, cb)
+        this.sendMessage(id, messageData)
     }
 
-    this.sendHScrollMessage = function (id, elements, cb) {
+    this.sendHScrollMessage = function (id, elements) {
         const messageData = {
             'attachment': {
                 'type': 'template',
@@ -36,10 +36,10 @@ function FacebookMessenger(endpointUrl, token) {
                 }
             }
         }
-        this.sendMessage(id, messageData, cb)
+        this.sendMessage(id, messageData)
     }
 
-    this.sendButtonsMessage = function (id, text, buttons, cb) {
+    this.sendButtons = function (id, text, buttons) {
         const messageData = {
             'attachment': {
                 'type': 'template',
@@ -50,10 +50,10 @@ function FacebookMessenger(endpointUrl, token) {
                 }
             }
         }
-        this.sendMessage(id, messageData, notificationType, cb)
+        this.sendMessage(id, messageData)
     }
 
-    this.sendListMessage = function (id, elements, buttons, topElementStyle, cb) {
+    this.sendListMessage = function (id, elements, buttons, topElementStyle) {
         buttons = buttons || []
         topElementStyle = topElementStyle || 'large'
         const messageData = {
@@ -67,10 +67,10 @@ function FacebookMessenger(endpointUrl, token) {
                 }
             }
         }
-        this.sendMessage(id, messageData, cb)
+        this.sendMessage(id, messageData)
     }
 
-    this.sendReceiptMessage = function (id, payload, cb) {
+    this.sendReceiptMessage = function (id, payload) {
         payload.template_type = 'receipt'
         const messageData = {
             'attachment': {
@@ -78,10 +78,10 @@ function FacebookMessenger(endpointUrl, token) {
                 'payload': payload
             }
         }
-        this.sendMessage(id, messageData, cb)
+        this.sendMessage(id, messageData)
     }
 
-    this.sendQuickRepliesMessage = function (id, attachment, quickReplies, cb) {
+    this.sendQuickReplies = function (id, attachment, quickReplies) {
         const attachmentType = (typeof attachment === 'string' ? 'text' : 'attachment')
         const attachmentObject = typeof attachment === 'string' ? attachment : {
             type: 'template',
@@ -94,7 +94,7 @@ function FacebookMessenger(endpointUrl, token) {
             [attachmentType]: attachmentObject,
             'quick_replies': quickReplies
         }
-        this.sendMessage(id, messageData, cb)
+        this.sendMessage(id, messageData)
     }
 
     this.sendMessage = function (id, data) {
