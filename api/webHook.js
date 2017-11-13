@@ -5,14 +5,24 @@ const users = require("./users");
 const config = require("../config");
 const CallbackFactory = require("./callbackFactory");
 
-const escapeUnicode=function(text){
-  //[^\x00-\x7F]+
-  return text.replace(/[^\x00-\x7F]+/g, function(character) {
-		var escape = character.charCodeAt().toString(16),
-		    longhand = escape.length > 2;
-    const rep= '\\' + (longhand ? 'u' : 'x') + ('0000' + escape).slice(longhand ? -4 : -2);
-    return rep;
-	});
+const unicodeToHex=function(byte){
+  const escape = byte.toString(16);  
+  const rep= '\\u' + ('0000' + escape).slice(-4);
+  return rep;
+}
+
+const escapeUnicodeBuffer=function(buffer){
+  var escaped="";
+
+  buffer.forEach(function(byte) {     
+    if(byte>127){
+       escaped+=unicodeToHex(byte);      
+     }else{
+       escaped+=String.fromCharCode(byte);
+     }
+  });
+
+  return escaped;
 }
 
 module.exports = function WebHook(chatWorker) {
@@ -27,11 +37,11 @@ module.exports = function WebHook(chatWorker) {
     const callbackFactory = new CallbackFactory(activeUser.pageScopeId);
     const callback = callbackFactory.createCallback(message);
     var json = JSON.stringify(callback);
-    var escapedJson=escapeUnicode(json);
+    var escapedJson=escapeUnicodeBuffer(new Buffer(json,"utf-8"));
     console.log("posting", escapedJson)
     var hash = crypto
       .createHmac("sha1", appSecret)
-      .update(escapedJson)
+      .update(new Buffer(escapedJson,"utf-8"))
       .digest("hex");
 
     axios({
