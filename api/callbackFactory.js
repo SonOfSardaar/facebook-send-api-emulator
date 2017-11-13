@@ -31,8 +31,9 @@ module.exports = function CallbackFactory(psid) {
     } else if (message.type === "image") {
       Object.assign(callbackData.message, {
         attachments: [{
+          type:"image",
           payload: {
-            url: message.paylod
+            url: message.payload
           }
         }]
       })

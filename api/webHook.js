@@ -18,8 +18,11 @@ module.exports = function WebHook(chatWorker) {
     const callback = callbackFactory.createCallback(message);
     var json = JSON.stringify(callback);
     console.log("posting", json)
-    var hash = crypto.createHmac("sha1", appSecret).update(json).digest("hex");
-    
+    var hash = crypto
+      .createHmac("sha1", appSecret)
+      .update(json)
+      .digest("hex");
+
     axios({
       method: "post",
       url: webHookUrl,
@@ -30,14 +33,16 @@ module.exports = function WebHook(chatWorker) {
     }).then(response => {
       console.log(response.statusText);
     }).catch(error => {
-      console.log(error.response.statusText);
+      console.log(error.message || error.response.statusText);
 
       var response = {
         type: "text",
-        text: error.response.statusText
+        text: error.message || error.response.statusText
       }
 
-      chatWorker.send({message: response});
+      chatWorker.send({
+        message: response
+      });
     });
   }
 }
