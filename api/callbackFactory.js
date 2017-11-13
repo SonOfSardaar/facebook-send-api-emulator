@@ -38,6 +38,7 @@ module.exports = function CallbackFactory(psid) {
         }]
       })
     } else {
+      delete callbackData.message;
       Object.assign(callbackData, {
         postback: {
           payload: message.payload
