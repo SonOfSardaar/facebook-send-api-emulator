@@ -1,6 +1,7 @@
 const chatWorker = require("./chatWorker");
 const users = require("./users");
 const database = require("./database");
+const WebHook = require("./webHook");
 
 module.exports = function (app) {
     var users = require("./users");
@@ -44,7 +45,15 @@ module.exports = function (app) {
     })
 
     app.get("/v2.6/accountLinking", function (request, response) {
-        var authorizationCode = request.query.authorization_code;
+        var {authorization_code} = request.query;
+                
+        console.log("Accepting authorization_code",authorization_code);
+        
+        const webHook=new WebHook(chatWorker);
+
+        webHook.dispatch({authorization_code});
+
+        response.status("201").send();
     })
 
     app.get("/v2.6/:psid", function (request, response) {

@@ -1,4 +1,9 @@
-module.exports = function ($compile) {//template button directive
+module.exports = function ($compile, $location) {//template button directive
+    const host=$location.host();
+    const port=$location.port();
+    const accountLinkingUrl="http://"+ host + ":" + port + "/v2.6/accountLinking?account_linking_token=XXXX";
+    const redirectUri=`http%3A%2F%2F${host}%3A${port}%2Fv2.6%2FaccountLinking%2F%3Faccount_linking_token%3Dxxxx`;
+
     return {
         replace: true,
         template: function (element, attrs) {
@@ -7,7 +12,8 @@ module.exports = function ($compile) {//template button directive
         link: function (scope, element, attrs) {
             if (scope.button.type === "account_link") {
                 scope.button.title = "Log In";
-                element.html("<a href='" + scope.button.url + "?redirect_uri=http%3A%2F%2Flocalhost%3A43878%2Fv2.6%2FaccountLinking%2F%3Faccount_linking_token%3Dxxxx'>Sign In</a>");
+
+                element.html(`<a href="${scope.button.url}?redirect_uri=${redirectUri}">Sign In</a>`);
             }
 
             if (scope.button.type === "web_url") {

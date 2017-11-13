@@ -37,7 +37,18 @@ module.exports = function CallbackFactory(psid) {
           }
         }]
       })
-    } else {
+    } 
+    else if(message.authorization_code){
+      delete callbackData.message;
+      
+      Object.assign(callbackData, {
+        account_linking: {
+          status:"linked",
+          authorization_code:message.authorization_code
+        }
+      })
+    }
+    else {
       delete callbackData.message;
       Object.assign(callbackData, {
         postback: {
