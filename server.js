@@ -1,13 +1,13 @@
-const config=require("./config");
+const config=require("./api/data/config");
 const express = require('express');
 const app = express();
 const http=require("http");
 const port = config.port;
 const bodyParser = require("body-parser");
-const sendApiRoutes = require("./api/sendApiRoutes");
-const sampleWebhookRoutes = require("./api/sampleWebhookRoutes");
+const sendApiRoutes = require("./api/routes/sendApi");
+const sampleWebhookRoutes = require("./api/routes/sampleWebhook");
 const WebSocket=require("ws");
-const chatWorker=require("./api/chatWorker");
+const chatWorker=require("./api/services/chatWorker");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());

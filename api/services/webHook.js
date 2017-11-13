@@ -2,7 +2,7 @@ const axios = require("axios");
 const uuidv1 = require('uuid/v1');
 const crypto = require("crypto");
 const users = require("./users");
-const config = require("../config");
+const config = require("../data/config");
 const CallbackFactory = require("./callbackFactory");
 
 const unicodeToHex = function (byte) {

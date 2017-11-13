@@ -1,5 +1,5 @@
-const FacebookMessenger=require("./messenger");
-const Roboto=require("./roboto");
+const FacebookMessenger=require("../services/messenger");
+const Roboto=require("../services/roboto");
 
 module.exports=(app,config)=>{
     var endpointUrl=`http://localhost:${config.port}`;

@@ -1,9 +1,11 @@
+const path=require("path");
+
 function Database() {
     const base = this;
     const jsonFile=require("jsonfile");
     
     var data={};
-    var dataFile="./data.json";
+    var dataFile=path.join(__dirname,"../db/data.json");
     try{
         data=jsonFile.readFileSync(dataFile);
     }catch(error){

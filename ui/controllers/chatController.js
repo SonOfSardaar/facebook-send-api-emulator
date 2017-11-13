@@ -1,10 +1,9 @@
 const ChatMessage = require("../models/chatMessage");
-const images = require("../data/imageList");
-
 module.exports = function ($http, $scope, config) {
     var socket = new WebSocket(config.webSocketUrl);
     $scope.messages = [];
-    $scope.persistantMenu = {};
+    $scope.persistentMenu = {};
+    $scope.images=[];
 
     showMessage("Connecting...");
 
@@ -13,14 +12,20 @@ module.exports = function ($http, $scope, config) {
             .$apply(function (scope) {
                 var model = JSON.parse(event.data);
 
+                if(model.images){
+                    $scope.images=model.images;
+                    showMessage("image list updated!")
+                }
+
+                if (model.persistent_menu) {
+                    $scope.persistentMenu = model.persistent_menu[0];
+                    showMessage("persistent menu updated!")                    
+                }
+
                 if (model.user) {
                     var user = model.user
                     $scope.user = user;
                     showMessage("hello " + user.first_name);
-                }
-
-                if (model.persistent_menu) {
-                    $scope.persistantMenu = model.persistent_menu[0];
                 }
 
                 $scope.quick_replies = [];
@@ -86,11 +91,15 @@ module.exports = function ($http, $scope, config) {
         socket.send(json);
     }
 
-    $scope.sendRandomImage = function () {
-        var index = Math.ceil(Math.random() * images.length) - 1;
-        var url = images[index];
+    $scope.sendImage=function(index){
+        var url = $scope.images[index];
         sendJson({type: "image", payload: url});
         echoImage(url);
+    }
+
+    $scope.sendRandomImage = function () {
+        var index = Math.ceil(Math.random() * $scope.images.length) - 1;
+        $scope.sendImage(index);
     }
 
     $scope.doPostback = function (button, message) {

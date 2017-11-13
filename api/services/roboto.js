@@ -1,4 +1,4 @@
-const brain = require("./robotosBrain");
+const brain = require("../data/robotosBrain");
 
 module.exports = function Roboto(messenger, config) {
     this.handle = function (callback) {
@@ -22,14 +22,14 @@ module.exports = function Roboto(messenger, config) {
         var sender = eventData.sender.id;
         var message = eventData.message;
 
-        if (message.text.match(/hi|hello|howdy/ig)) {
+        if ((message.text||"").match(/hi|hello|howdy/ig)) {
             const index = Math.floor(Math.random() * brain.greetings.length);
             const greeting = brain.greetings[index];
             messenger.sendTextMessage(sender, greeting);
             return;
         }
 
-        if (message.text.match(/infinity stones/ig)) {
+        if ((message.text||"").match(/infinity stones/ig)) {
             const stones = brain.infinityStones.map(stone => {
                 return stone.name
             });
@@ -61,6 +61,11 @@ module.exports = function Roboto(messenger, config) {
 
             messenger.sendButtons(sender, text, buttons)
             return;
+        }
+
+        if(message.attachments){            
+            messenger.sendTextMessage(sender, "Nice photo!");
+            return;    
         }
 
         messenger.sendTextMessage(sender, "Sorry I don't understand this");

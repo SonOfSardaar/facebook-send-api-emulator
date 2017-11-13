@@ -14,8 +14,8 @@ function ChatWorker(){
     base.sendInitialData=function(){
         var user=users.activeUser();
         var persistent_menu=database.getData("persistent_menu");
-        
-        var data={user,persistent_menu};
+        var images=database.getData("images")||require("../data/images");
+        var data={user,persistent_menu,images};
         base.send(data);
     }
 

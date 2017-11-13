@@ -23,7 +23,7 @@
             <div class="footer">
                 <div class="dropup">
                     <button class="btn btn-default dropdown-toggle pull-left" type="button" data-toggle="dropdown">☰</button>
-                    <dropdown-menu menu="persistantMenu.call_to_actions" item-select="doPostback" />
+                    <dropdown-menu menu="persistentMenu.call_to_actions" item-select="doPostback" />
                 </div>
                 <input type="text" ng-model="textToSend" handle-enter="sendMessage(textToSend)" />
                 <span class="btn btn-primary pull-right" ng-click="sendMessage(textToSend)">Send</span>
@@ -36,6 +36,15 @@
                         </li>
                         <li>
                             <a href="#" ng-click="switchUser(2)">Switch User To: Jane Roe</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <img ng-repeat="image in images"
+                                 ng-click="sendImage($index)"
+                                 ng-src="{{image}}"
+                                 alt="{{image}}"
+                                 class="thumbnail xs">
+                                 <hr style="clear:both"/>
                         </li>
                         <li class="divider"></li>
                         <li>

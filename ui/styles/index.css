@@ -40,7 +40,7 @@
 }
 
 .dropdown-menu{
-    background-color: #e4e4e4;
+    background-color: #fdfdfd;
 }
 
 .dropdown-menu>li>a{
@@ -327,6 +327,17 @@ img.attachment {
     border-radius: 1em;
 }
 
+img.thumbnail.xs{
+    height:50px;
+    float:left;
+    margin: 0;
+    margin-top:1px;
+    margin-bottom:10px;
+}
+
+img.thumbnail.xs:hover{
+    background-color:#5bc0de;
+}
 [background-image] * {
     color:#FDFDFD
 }

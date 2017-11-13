@@ -1,11 +1,9 @@
-const chatWorker = require("./chatWorker");
-const users = require("./users");
-const database = require("./database");
-const WebHook = require("./webHook");
+const chatWorker = require("../services/chatWorker");
+const users = require("../services/users");
+const database = require("../services/database");
+const WebHook = require("../services/webHook");
 
 module.exports = function (app) {
-    var users = require("./users");
-
     app.post("/v2.6/me/messages", function (request, response) {
         console.log(request.body);
         chatWorker.send(request.body);
@@ -14,18 +12,11 @@ module.exports = function (app) {
 
     app.post("/v2.6/me/messenger_profile", function (request, response) {
         var model = request.body;
-        if (model.persistent_menu) 
-            database.saveData("persistent_menu",model.persistent_menu);
-
-        if (model.get_started) 
-            database.saveData("get_started",model.get_started);
-
-        if (model.greeting) 
-            database.saveData("greeting",model.greeting);
-        
-        if(model.whitelisted_domains)
-            database.saveData("whitelisted_domains",model.whitelisted_domains);
-            
+        for(var property in model){
+            var value=model[property];
+            database.saveData(property,value);
+        }
+                    
         response.send({result:"success"});
     })
 

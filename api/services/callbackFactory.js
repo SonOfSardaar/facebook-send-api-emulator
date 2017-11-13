@@ -1,4 +1,4 @@
-const config = require("../config");
+const config = require("../data/config");
 const uuidv1 = require('uuid/v1');
 
 module.exports = function CallbackFactory(psid) {
