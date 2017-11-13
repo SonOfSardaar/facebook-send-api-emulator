@@ -1,11 +1,13 @@
 var users = {
     list: [{
+        id:1,
         first_name: "John",
         last_name: "Doe",
         pageScopeId: "5666671847402514",
         gender: "male",
         active: true
     }, {
+        id:2,
         first_name: "Jane",
         last_name: "Doe",
         pageScopeId: "6666671847402514",
@@ -32,10 +34,10 @@ users.activeUser = function () {
     return user;
 }
 
-users.activate = function (psid) {
+users.activate = function (id) {
     users.list
         .forEach(function (user) {
-            user.active = user.pageScopeId === psid;
+            user.active = user.id == id;
         });
 }
 

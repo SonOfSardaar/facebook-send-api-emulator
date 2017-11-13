@@ -1,9 +1,14 @@
-const chatWorker = require("../services/chatWorker");
 const users = require("../services/users");
 const database = require("../services/database");
 const WebHook = require("../services/webHook");
 
-module.exports = function (app) {
+module.exports = function (app,config,chatWorker) {
+    app.put("/user/:id",(request,response)=>{
+        users.activate(request.params.id);
+        chatWorker.send({user:users.activeUser()})
+        response.send("OK");
+    })
+
     app.post("/v2.6/me/messages", function (request, response) {
         console.log(request.body);
         chatWorker.send(request.body);
@@ -15,6 +20,7 @@ module.exports = function (app) {
         for(var property in model){
             var value=model[property];
             database.saveData(property,value);
+            chatWorker.send({[property]:value})
         }
                     
         response.send({result:"success"});

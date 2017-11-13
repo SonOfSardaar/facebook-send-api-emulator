@@ -7,19 +7,20 @@ const bodyParser = require("body-parser");
 const sendApiRoutes = require("./api/routes/sendApi");
 const sampleWebhookRoutes = require("./api/routes/sampleWebhook");
 const WebSocket=require("ws");
-const chatWorker=require("./api/services/chatWorker");
+const ChatWorker=require("./api/services/chatWorker");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 const server=http.createServer(app);
 var webSocketServer=new WebSocket.Server({server})
-chatWorker.start(webSocketServer);
+
+const chatWorker=new ChatWorker(webSocketServer);
 
 app.use(express.static("dist"))
 
-sendApiRoutes(app);
-sampleWebhookRoutes(app,config);
+sendApiRoutes(app,config,chatWorker);
+sampleWebhookRoutes(app,config,chatWorker);
 
 server.listen(port);
 

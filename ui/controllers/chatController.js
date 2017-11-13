@@ -11,7 +11,6 @@ module.exports = function ($http, $scope, config) {
         $scope
             .$apply(function (scope) {
                 var model = JSON.parse(event.data);
-
                 if(model.images){
                     $scope.images=model.images;
                     showMessage("image list updated!")
@@ -123,7 +122,7 @@ module.exports = function ($http, $scope, config) {
 
     $scope.switchUser = function (id) {
         $http
-            .put(config.serviceUrl + "/settings/user/" + id)
+            .put(config.serviceUrl + "/user/" + id)
             .then(function () {});
     }
     

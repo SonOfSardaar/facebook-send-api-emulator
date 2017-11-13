@@ -5,7 +5,7 @@ function Database() {
     const jsonFile=require("jsonfile");
     
     var data={};
-    var dataFile=path.join(__dirname,"../db/data.json");
+    var dataFile=path.join(__dirname,"../runtime/data.json");
     try{
         data=jsonFile.readFileSync(dataFile);
     }catch(error){
