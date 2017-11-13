@@ -5,6 +5,16 @@ const users = require("./users");
 const config = require("../config");
 const CallbackFactory = require("./callbackFactory");
 
+const escapeUnicode=function(text){
+  //[^\x00-\x7F]+
+  return text.replace(/[^\x00-\x7F]+/g, function(character) {
+		var escape = character.charCodeAt().toString(16),
+		    longhand = escape.length > 2;
+    const rep= '\\' + (longhand ? 'u' : 'x') + ('0000' + escape).slice(longhand ? -4 : -2);
+    return rep;
+	});
+}
+
 module.exports = function WebHook(chatWorker) {
   const base = this;
   const pageScopeId = config.pageScopeId;
@@ -17,10 +27,11 @@ module.exports = function WebHook(chatWorker) {
     const callbackFactory = new CallbackFactory(activeUser.pageScopeId);
     const callback = callbackFactory.createCallback(message);
     var json = JSON.stringify(callback);
-    console.log("posting", json)
+    var escapedJson=escapeUnicode(json);
+    console.log("posting", escapedJson)
     var hash = crypto
       .createHmac("sha1", appSecret)
-      .update(json)
+      .update(escapedJson)
       .digest("hex");
 
     axios({
