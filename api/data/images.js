@@ -11,5 +11,8 @@ module.exports = [
         "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRzPCML4tvrBdYC2yh0MZ6ZL7" +
         "s6WJkjb0n92lcvoB6B8EzT0-tO4sq8nNr9bvgdcUUpryYRIaI&usqp=CAc",
         "https://n2.sdlcdn.com/imgs/a/9/9/Stylen-Black-Medium-Unisex-Aviator-SDL293190066" +
-        "-1-88a73.jpg"
+        "-1-88a73.jpg",
+        "https://images.hobbs.co.uk/s=w240,pd1/o=95/https:///www.hobbs.co.uk/images/products/0217-6871-9045L00-166/0217-6871-9045L00-166_01_230_246.jpg",
+        "http://media.wallis.co.uk/wcsstore/Wallis/images/catalog/WL203447121_3col_P_1.jpg",
+        "https://4.imimg.com/data4/AU/RU/MY-9462922/embroidered-womens-tops-500x500.jpg",
 ];
