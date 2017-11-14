@@ -19,7 +19,7 @@ module.exports = function (app, config, chatWorker) {
 
     app.post("/v2.6/me/messenger_profile", function (request, response) {
         var model = request.body;
-        for (var property in model) {            
+        for (var property in model) {
             var value = model[property];
             database.saveData(property, value);
             chatWorker.send({
@@ -32,6 +32,25 @@ module.exports = function (app, config, chatWorker) {
         });
     })
 
+    app.put("/v2.6/configuration", function (request, response) {
+        var {configuration} = request.body;
+        Object.assign(config, configuration);
+        database.saveData("configuration", configuration);
+
+        response.send({
+            result: "success"
+        });
+    })
+
+    app.get("/v2.6/configuration", function (request, response) {        
+        
+        var model = {
+            data: [{configuration:config}]
+        };
+
+        response.send(model);
+    })
+
     app.get("/v2.6/me/messenger_profile", function (request, response) {
         var fields = (request.query.fields || "").split(",");
 
@@ -40,16 +59,10 @@ module.exports = function (app, config, chatWorker) {
         };
 
         fields.forEach(function (field) {
-            if (field === "configuration") {
-                model.data.push({[field]:config});
-                return;
-            }
-            else{
-                var data = database.getData(field);
-                var item = {};
-                item[field] = data;
-                if (data) model.data.push(item);
-            }            
+            var data = database.getData(field);
+            var item = {};
+            item[field] = data;
+            if (data) model.data.push(item);
         });
 
         response.send(model);
