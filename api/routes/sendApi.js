@@ -2,10 +2,12 @@ const users = require("../services/users");
 const database = require("../services/database");
 const WebHook = require("../services/webHook");
 
-module.exports = function (app,config,chatWorker) {
-    app.put("/user/:id",(request,response)=>{
+module.exports = function (app, config, chatWorker) {
+    app.put("/user/:id", (request, response) => {
         users.activate(request.params.id);
-        chatWorker.send({user:users.activeUser()})
+        chatWorker.send({
+            user: users.activeUser()
+        })
         response.send("OK");
     })
 
@@ -17,38 +19,54 @@ module.exports = function (app,config,chatWorker) {
 
     app.post("/v2.6/me/messenger_profile", function (request, response) {
         var model = request.body;
-        for(var property in model){
-            var value=model[property];
-            database.saveData(property,value);
-            chatWorker.send({[property]:value})
+        for (var property in model) {            
+            var value = model[property];
+            database.saveData(property, value);
+            chatWorker.send({
+                [property]: value
+            })
         }
-                    
-        response.send({result:"success"});
+
+        response.send({
+            result: "success"
+        });
     })
 
     app.get("/v2.6/me/messenger_profile", function (request, response) {
-        var fields = (request.query.fields||"").split(",");
+        var fields = (request.query.fields || "").split(",");
 
-        var model = {data:[]};
+        var model = {
+            data: []
+        };
 
-        fields.forEach(function(field) {
-            var data=database.getData(field);
-            var item={};
-            item[field]=data;
-            if(data) model.data.push(item);                
-        });             
-        
+        fields.forEach(function (field) {
+            if (field === "configuration") {
+                model.data.push({[field]:config});
+                return;
+            }
+            else{
+                var data = database.getData(field);
+                var item = {};
+                item[field] = data;
+                if (data) model.data.push(item);
+            }            
+        });
+
         response.send(model);
     })
 
     app.get("/v2.6/accountLinking", function (request, response) {
-        var {authorization_code} = request.query;
-                
-        console.log("Accepting authorization_code",authorization_code);
-        
-        const webHook=new WebHook(chatWorker);
+        var {
+            authorization_code
+        } = request.query;
 
-        webHook.dispatch({authorization_code});
+        console.log("Accepting authorization_code", authorization_code);
+
+        const webHook = new WebHook(chatWorker);
+
+        webHook.dispatch({
+            authorization_code
+        });
 
         response.status("201").send();
     })
