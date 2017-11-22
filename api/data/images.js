@@ -15,4 +15,6 @@ module.exports = [
         "https://images.hobbs.co.uk/s=w240,pd1/o=95/https:///www.hobbs.co.uk/images/products/0217-6871-9045L00-166/0217-6871-9045L00-166_01_230_246.jpg",
         "http://media.wallis.co.uk/wcsstore/Wallis/images/catalog/WL203447121_3col_P_1.jpg",
         "https://4.imimg.com/data4/AU/RU/MY-9462922/embroidered-womens-tops-500x500.jpg",
+        "https://business.pinterest.com/sites/default/files/blog_intro/2017-01/multiple-products-shot-blog-final.png",
+        "http://www.poppaganda.net/wp-content/uploads/2012/08/new_arrivals_23_08_12.jpg"
 ];
