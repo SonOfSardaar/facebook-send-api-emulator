@@ -13,13 +13,16 @@ module.exports = function ($compile, $location) {//template button directive
             if (scope.button.type === "account_link") {
                 scope.button.title = "Log In";
 
-                element.html(`<a href="${scope.button.url}?redirect_uri=${redirectUri}">Sign In</a>`);
+                element.html(`<a target="_blank" href="${scope.button.url}?redirect_uri=${redirectUri}">` + scope.button.title + `</a>`);
             }
 
             if (scope.button.type === "web_url") {
                 var linkHtml = "<a href='" + scope.button.url + "' target='empty'>" + scope.button.title + "</a>";
                 element.html(linkHtml);
             }
+
+            if(scope.button.type==="element_share")
+                scope.button.title="Share";
         }
     };
 }
