@@ -47,7 +47,7 @@ module.exports = function WebHook(chatWorker) {
   base.dispatch = function (message) {
     console.log("dispatching:", message.type);
     var activeUser = users.activeUser();
-    const callbackFactory = new CallbackFactory(activeUser.pageScopeId);
+    const callbackFactory = new CallbackFactory(activeUser.id);
     const callback = callbackFactory.createCallback(message);
     var json = JSON.stringify(callback);
     var escapedJson = escapeUnicodeBuffer(new Buffer(json, "utf-8"));

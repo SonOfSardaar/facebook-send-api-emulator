@@ -1,16 +1,16 @@
 var users = {
     list: [{
-        id:1,
+        index:1,
+        id:"5666671847402514",
         first_name: "John",
         last_name: "Doe",
-        pageScopeId: "5666671847402514",
         gender: "male",
         active: true
     }, {
-        id:2,
+        index:2,
+        id:"6666671847402514",
         first_name: "Jane",
         last_name: "Doe",
-        pageScopeId: "6666671847402514",
         gender: "female",
         active: false
     }]
@@ -20,7 +20,7 @@ users.get = function (psid) {
     var user = users
         .list
         .filter(user => {
-            return user.pageScopeId === psid
+            return user.id === psid
         })[0];
     return user;
 }
@@ -37,7 +37,7 @@ users.activeUser = function () {
 users.activate = function (id) {
     users.list
         .forEach(function (user) {
-            user.active = user.id == id;
+            user.active = user.index == id;
         });
 }
 
