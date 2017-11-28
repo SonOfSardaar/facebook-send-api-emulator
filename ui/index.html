@@ -10,7 +10,7 @@
 <body>
     <div class="smartphone container" ng-app="chatty">
         <section ng-controller="chatController" class="chat-window">
-            <div class="messages">
+            <div id="messageWindow" class="messages">
                 <div ng-repeat="message in messages track by $index" class="chat-message" chat-message>
 
                 </div>
@@ -56,7 +56,5 @@
     </div>
     </section>
     </div>
-
 </body>
-
 </html>

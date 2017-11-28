@@ -29,11 +29,22 @@ module.exports = function ($http, $scope, config) {
 
                 $scope.quick_replies = [];
 
-                if(!model.message) return;
+                if(!model.message) 
+                    return;
+
                 $scope
                     .messages
                     .push(new ChatMessage(model).identify($scope));
+
+                scrollChatToBottom();
             });
+    }
+
+    function scrollChatToBottom(){
+        window.setTimeout(function() {
+            var elem = document.getElementById("messageWindow");
+            elem.scrollTop = elem.scrollHeight;
+            }, 100);
     }
 
     function showMessage(text) {
@@ -44,7 +55,7 @@ module.exports = function ($http, $scope, config) {
                     type: "text",
                     text: text
                 }
-            }).identify());
+            }).identify());            
     }
 
     function echo(text) {
@@ -56,6 +67,8 @@ module.exports = function ($http, $scope, config) {
                     text: text
                 }
             }).identify());
+
+        scrollChatToBottom();
     }
 
     function echoImage(url) {
