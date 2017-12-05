@@ -37,16 +37,13 @@
                         <li>
                             <a href="#" ng-click="switchUser(2)">Switch User To: Jane Roe</a>
                         </li>
-                        <li class="divider"></li>
-                        <li>
+                        <li class="image-strip">
                             <img ng-repeat="image in images"
                                  ng-click="sendImage($index)"
                                  ng-src="{{image}}"
                                  alt="{{image}}"
                                  class="thumbnail xs">
-                                 <hr style="clear:both"/>
                         </li>
-                        <li class="divider"></li>
                         <li>
                             <a href="#" ng-click="sendRandomImage()">Send Random Image</a>
                         </li>

@@ -3,7 +3,7 @@ const path=require("path")
 const pathHelper=require("./pathHelper")
 const FileSync = require('lowdb/adapters/FileSync')
 
-const dbPath=path.resolve(__dirname,"../../database")
+const dbPath=path.resolve(__dirname,"../../db")
 const dbFile=path.resolve(dbPath,"db.json")
 
 pathHelper.createDirectoryIfMissing(dbPath)
