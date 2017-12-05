@@ -1,28 +1,26 @@
-const path=require("path");
+const low = require('lowdb')
+const path=require("path")
+const pathHelper=require("./pathHelper")
+const FileSync = require('lowdb/adapters/FileSync')
 
-function Database() {
-    const base = this;
-    const jsonFile=require("jsonfile");
-    
-    var data={};
-    var dataFile=path.join(__dirname,"../../runtime/data.json");
-    try{
-        data=jsonFile.readFileSync(dataFile);
-    }catch(error){
-        console.log(error);
+const dbPath=path.resolve(__dirname,"../../database")
+const dbFile=path.resolve(dbPath,"db.json")
+
+pathHelper.createDirectoryIfMissing(dbPath)
+
+const adapter = new FileSync(dbFile)
+const db = low(adapter)
+
+db.defaults({}).write()
+
+class Database{
+    saveData(field, value) {
+        db.set(field,value).write();
     }
 
-    this.saveData = function (field, value) {
-        data[field]=value;
-        jsonFile.writeFile(dataFile, data,{spaces:2},error=>{
-            const message=error|| (field + " saved");
-            console.log(message);
-        });
-    }
-
-    this.getData = function (field) {
-        return data[field];
+    getData(field) {
+        return db.get(field).value();
     }
 }
 
-module.exports = new Database();
+module.exports=new Database()
