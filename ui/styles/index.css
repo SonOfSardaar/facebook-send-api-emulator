@@ -315,6 +315,7 @@ h4 {
     padding-bottom: 10px;
     white-space: nowrap;    
     line-height: 2em;
+    overflow-x: auto;
 }
 
 .quick-replies .button {

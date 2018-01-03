@@ -19,5 +19,6 @@ chatty.directive("backgroundImage", require("./directives/backgroundImage"));
 chatty.directive("templateButton", require("./directives/templateButton"));
 chatty.directive("dropdownMenu", require("./directives/dropdownMenu"));
 chatty.directive("hrefTarget", require("./directives/hrefTarget"));
+chatty.directive("autoPan", require("./directives/autoPan"));
 
 chatty.controller("chatController", ["$http", "$scope", "config", ChatController]);
