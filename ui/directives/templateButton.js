@@ -1,8 +1,7 @@
 module.exports = function ($compile, $location) {//template button directive
     const host=$location.host();
     const port=$location.port();
-    const accountLinkingUrl="http://"+ host + ":" + port + "/v2.6/accountLinking?account_linking_token=XXXX";
-    const redirectUri=`http%3A%2F%2F${host}%3A${port}%2Fv2.6%2FaccountLinking%2F%3Faccount_linking_token%3Dxxxx`;
+    const redirectUri=`http%3A%2F%2F${host}%3A${port}%2Fmessenger_platform%2Faccount_linking%3Faccount_linking_token%3DXXXX`;
 
     return {
         replace: true,

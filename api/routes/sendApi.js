@@ -11,47 +11,25 @@ module.exports = function (app, config, chatWorker) {
         response.send("OK");
     })
 
-    app.post("/v2.6/me/messages", function (request, response) {
+    app.get("/v2.11/:psid", function (request, response) {
+        var psid = request.params.psid;
+        var user = users.get(psid);
+        console.log("user resolved " + psid, user);
+        response.send(user)
+    })
+
+    app.post("/v2.11/me/messages", function (request, response) {
         console.log(request.body);
         chatWorker.send(request.body);
         response.send("OK");
+        // In Graph API the success response body is:
+        // {
+        //   "recipient_id": "597464983710493",
+        //   "message_id": "mid.$cAACxOundcUZnWaCZ2VhKFtRJR5BJ"
+        // }
     })
 
-    app.post("/v2.6/me/messenger_profile", function (request, response) {
-        var model = request.body;
-        for (var property in model) {
-            var value = model[property];
-            database.saveData(property, value);
-            chatWorker.send({
-                [property]: value
-            })
-        }
-
-        response.send({
-            result: "success"
-        });
-    })
-
-    app.put("/v2.6/configuration", function (request, response) {
-        var {configuration} = request.body;
-        Object.assign(config, configuration);
-        database.saveData("configuration", configuration);
-
-        response.send({
-            result: "success"
-        });
-    })
-
-    app.get("/v2.6/configuration", function (request, response) {        
-        
-        var model = {
-            data: [{configuration:config}]
-        };
-
-        response.send(model);
-    })
-
-    app.get("/v2.6/me/messenger_profile", function (request, response) {
+    app.get("/v2.11/me/messenger_profile", function (request, response) {
         var fields = (request.query.fields || "").split(",");
 
         var model = {
@@ -68,7 +46,24 @@ module.exports = function (app, config, chatWorker) {
         response.send(model);
     })
 
-    app.get("/v2.6/accountLinking", function (request, response) {
+    app.post("/v2.11/me/messenger_profile", function (request, response) {
+        var model = request.body;
+        for (var property in model) {
+            var value = model[property];
+            database.saveData(property, value);
+            chatWorker.send({
+                [property]: value
+            })
+        }
+        response.send({
+            result: "success"
+        });
+    })
+
+    //This is not Graph API url. This is CALLBACK_URL where we must redirect the browser to this location at the end of the authentication flow.
+    //For more detail please see: https://developers.facebook.com/docs/messenger-platform/identity/account-linking
+    app.get("/messenger_platform/account_linking", function (request, response) {
+        console.log("GET /v2.6/accountLinking\n")
         var {
             authorization_code
         } = request.query;
@@ -84,10 +79,24 @@ module.exports = function (app, config, chatWorker) {
         response.status("201").send();
     })
 
-    app.get("/v2.6/:psid", function (request, response) {
-        var psid = request.params.psid;
-        var user = users.get(psid);
-        console.log("user resolved " + psid, user);
-        response.send(user)
+    //This is not Graph API url. This is local url to configure emulator.
+    app.get("/emulator/configuration", function (request, response) {        
+        
+        var model = {
+            data: [{configuration:config}]
+        };
+
+        response.send(model);
+    })
+
+    //This is not Graph API url. This is local url to configure emulator.
+    app.put("/emulator/configuration", function (request, response) {
+        var {configuration} = request.body;
+        Object.assign(config, configuration);
+        database.saveData("configuration", configuration);
+
+        response.send({
+            result: "success"
+        });
     })
 }
