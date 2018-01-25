@@ -11,14 +11,14 @@ module.exports = function (app, config, chatWorker) {
         response.send("OK");
     })
 
-    app.get("/graph.facebook.com/v2.11/:psid", function (request, response) {
+    app.get("/v2.11/:psid", function (request, response) {
         var psid = request.params.psid;
         var user = users.get(psid);
         console.log("user resolved " + psid, user);
         response.send(user)
     })
 
-    app.post("/graph.facebook.com/v2.11/me/messages", function (request, response) {
+    app.post("/v2.11/me/messages", function (request, response) {
         console.log(request.body);
         chatWorker.send(request.body);
         response.send("OK");
@@ -29,7 +29,7 @@ module.exports = function (app, config, chatWorker) {
         // }
     })
 
-    app.get("/graph.facebook.com/v2.11/me/messenger_profile", function (request, response) {
+    app.get("/v2.11/me/messenger_profile", function (request, response) {
         var fields = (request.query.fields || "").split(",");
 
         var model = {
@@ -46,7 +46,7 @@ module.exports = function (app, config, chatWorker) {
         response.send(model);
     })
 
-    app.post("/graph.facebook.com/v2.11/me/messenger_profile", function (request, response) {
+    app.post("/v2.11/me/messenger_profile", function (request, response) {
         var model = request.body;
         for (var property in model) {
             var value = model[property];
@@ -62,7 +62,7 @@ module.exports = function (app, config, chatWorker) {
 
     //This is not Graph API url. This is CALLBACK_URL where we must redirect the browser to this location at the end of the authentication flow.
     //For more detail please see: https://developers.facebook.com/docs/messenger-platform/identity/account-linking
-    app.get("/facebook.com/messenger_platform/account_linking", function (request, response) {
+    app.get("/messenger_platform/account_linking", function (request, response) {
         console.log("GET /v2.6/accountLinking\n")
         var {
             authorization_code
