@@ -1,6 +1,7 @@
 const users = require("../services/users");
 const database = require("../services/database");
 const WebHook = require("../services/webHook");
+const shortid = require("shortid");
 
 module.exports = function (app, config, chatWorker) {
     app.put("/user/:id", (request, response) => {
@@ -11,7 +12,7 @@ module.exports = function (app, config, chatWorker) {
         response.send("OK");
     })
 
-    app.get("/v2.11/:psid", function (request, response) {
+    app.get("/v2.11/:psid(\\d+)", function (request, response) {
         var psid = request.params.psid;
         var user = users.get(psid);
         console.log("user resolved " + psid, user);
@@ -21,12 +22,9 @@ module.exports = function (app, config, chatWorker) {
     app.post("/v2.11/me/messages", function (request, response) {
         console.log(request.body);
         chatWorker.send(request.body);
-        response.send("OK");
-        // In Graph API the success response body is:
-        // {
-        //   "recipient_id": "597464983710493",
-        //   "message_id": "mid.$cAACxOundcUZnWaCZ2VhKFtRJR5BJ"
-        // }
+        var message_id = "mid.$cACCxO" + shortid.generate();
+        var recipient_id = request.body.recipient.id;
+        response.send({recipient_id, message_id });        
     })
 
     app.get("/v2.11/me/messenger_profile", function (request, response) {
@@ -60,8 +58,6 @@ module.exports = function (app, config, chatWorker) {
         });
     })
 
-    //This is not Graph API url. This is CALLBACK_URL where we must redirect the browser to this location at the end of the authentication flow.
-    //For more detail please see: https://developers.facebook.com/docs/messenger-platform/identity/account-linking
     app.get("/messenger_platform/account_linking", function (request, response) {
         console.log("GET /v2.6/accountLinking\n")
         var {
@@ -78,6 +74,77 @@ module.exports = function (app, config, chatWorker) {
 
         response.status("201").send();
     })
+
+    //Create Custom Label {name:labelName}
+    app.post("/v2.11/me/custom_labels", function (request, response) {
+        console.log(request.body);
+        var label = database.addLabel(request.body);
+        response.send({id:label.id});
+    })
+    
+    //Get Label Details
+    app.get("/v2.11/:labelId", function (request, response) {
+        console.log(request.body);
+        var label = database.getLabel(request.params.labelId);
+
+        response.send(label);
+    })
+
+    //Delete Label Details
+    app.delete("/v2.11/:labelId", function (request, response) {
+        console.log(request.body);
+        database.removeLabel(request.params.labelId);
+
+        response.send({success: true});
+    })
+
+    //Retrieve All Labels
+    app.get("/v2.11/me/custom_labels", function (request, response) {
+        console.log(request.body);
+        var labels=database.getLabels();
+        response.send({data:labels});
+    })
+
+    //Associate Label to PSID {user:PSID}
+    app.post("/v2.11/:labelId/label", function (request, response) {
+        console.log(request);
+        if(!request.params.labelId) throw "labelId missing from url"
+
+        var label = database.addUserLabel(request.body.user, request.params.labelId);
+        response.send({success:true});
+    })
+
+    //Remove Label from PSID {user:PSID}
+    app.delete("/v2.11/:labelId/label", function (request, response) {
+        console.log(request);
+        if(!request.params.labelId) throw "labelId missing from url"
+
+        var label = database.removeUserLabel(request.body.user, request.params.labelId);
+        response.send({success:true});
+    })
+
+    //Retrieve a List of All Assosiated Labels
+    app.get("/v2.11/:psid(\\d+)/custom_labels", function (request, response) {
+        console.log(request.body);
+        var labels=database.getUserLabels(request.params.psid);
+        response.send({data:labels});
+    })
+        
+    app.post("/v2.11/me/message_creatives", function (request, response) {
+        console.log(request.body);
+        response.send({
+            message_creative_id: shortid.generate()
+        });
+    })
+
+    app.post("/v2.11/me/broadcast_messages", function (request, response) {
+        console.log(request.body);
+        //chatWorker.send(request.body);
+        response.send({
+            broadcast_id: shortid.generate()
+        });
+    })
+
 
     //This is not Graph API url. This is local url to configure emulator.
     app.get("/emulator/configuration", function (request, response) {        
