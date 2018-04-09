@@ -28,6 +28,8 @@ module.exports = function ($http, $scope, config) {
                 }
 
                 $scope.quick_replies = [];
+                
+                $scope.sender_action=model.sender_action;
 
                 if(!model.message) 
                     return;

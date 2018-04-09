@@ -2,6 +2,7 @@ const users = require("../services/users");
 const database = require("../services/database");
 const WebHook = require("../services/webHook");
 const shortid = require("shortid");
+const version="v2.11";
 
 module.exports = function (app, config, chatWorker) {
     app.put("/user/:id", (request, response) => {
@@ -12,14 +13,14 @@ module.exports = function (app, config, chatWorker) {
         response.send("OK");
     })
 
-    app.get("/v2.11/:psid(\\d+)", function (request, response) {
+    app.get(`/${version}/:psid(\\d+)`, function (request, response) {
         var psid = request.params.psid;
         var user = users.get(psid);
         console.log("user resolved " + psid, user);
         response.send(user)
     })
 
-    app.post("/v2.11/me/messages", function (request, response) {
+    app.post(`/${version}/me/messages`, function (request, response) {
         console.log(request.body);
         chatWorker.send(request.body);
         var message_id = "mid.$cACCxO" + shortid.generate();
@@ -27,7 +28,7 @@ module.exports = function (app, config, chatWorker) {
         response.send({recipient_id, message_id });        
     })
 
-    app.get("/v2.11/me/messenger_profile", function (request, response) {
+    app.get(`/${version}/me/messenger_profile`, function (request, response) {
         var fields = (request.query.fields || "").split(",");
 
         var model = {
@@ -44,7 +45,7 @@ module.exports = function (app, config, chatWorker) {
         response.send(model);
     })
 
-    app.post("/v2.11/me/messenger_profile", function (request, response) {
+    app.post(`/${version}/me/messenger_profile`, function (request, response) {
         var model = request.body;
         for (var property in model) {
             var value = model[property];
@@ -76,14 +77,14 @@ module.exports = function (app, config, chatWorker) {
     })
 
     //Create Custom Label {name:labelName}
-    app.post("/v2.11/me/custom_labels", function (request, response) {
+    app.post(`/${version}/me/custom_labels`, function (request, response) {
         console.log(request.body);
         var label = database.addLabel(request.body);
         response.send({id:label.id});
     })
     
     //Get Label Details
-    app.get("/v2.11/:labelId", function (request, response) {
+    app.get(`/${version}/:labelId`, function (request, response) {
         console.log(request.body);
         var label = database.getLabel(request.params.labelId);
 
@@ -91,7 +92,7 @@ module.exports = function (app, config, chatWorker) {
     })
 
     //Delete Label Details
-    app.delete("/v2.11/:labelId", function (request, response) {
+    app.delete(`/${version}/:labelId`, function (request, response) {
         console.log(request.body);
         database.removeLabel(request.params.labelId);
 
@@ -99,14 +100,14 @@ module.exports = function (app, config, chatWorker) {
     })
 
     //Retrieve All Labels
-    app.get("/v2.11/me/custom_labels", function (request, response) {
+    app.get(`/${version}/me/custom_labels`, function (request, response) {
         console.log(request.body);
         var labels=database.getLabels();
         response.send({data:labels});
     })
 
     //Associate Label to PSID {user:PSID}
-    app.post("/v2.11/:labelId/label", function (request, response) {
+    app.post(`/${version}/:labelId/label`, function (request, response) {
         console.log(request);
         if(!request.params.labelId) throw "labelId missing from url"
 
@@ -115,7 +116,7 @@ module.exports = function (app, config, chatWorker) {
     })
 
     //Remove Label from PSID {user:PSID}
-    app.delete("/v2.11/:labelId/label", function (request, response) {
+    app.delete(`/${version}/:labelId/label`, function (request, response) {
         console.log(request);
         if(!request.params.labelId) throw "labelId missing from url"
 
@@ -124,27 +125,26 @@ module.exports = function (app, config, chatWorker) {
     })
 
     //Retrieve a List of All Assosiated Labels
-    app.get("/v2.11/:psid(\\d+)/custom_labels", function (request, response) {
+    app.get(`/${version}/:psid(\\d+)/custom_labels`, function (request, response) {
         console.log(request.body);
         var labels=database.getUserLabels(request.params.psid);
         response.send({data:labels});
     })
         
-    app.post("/v2.11/me/message_creatives", function (request, response) {
+    app.post(`/${version}/me/message_creatives`, function (request, response) {
         console.log(request.body);
         response.send({
             message_creative_id: shortid.generate()
         });
     })
 
-    app.post("/v2.11/me/broadcast_messages", function (request, response) {
+    app.post(`/${version}/me/broadcast_messages`, function (request, response) {
         console.log(request.body);
         //chatWorker.send(request.body);
         response.send({
             broadcast_id: shortid.generate()
         });
     })
-
 
     //This is not Graph API url. This is local url to configure emulator.
     app.get("/emulator/configuration", function (request, response) {        
