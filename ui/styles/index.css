@@ -225,14 +225,13 @@
 .echo-message .check{
     border: 1px solid #DFDFDF;
     border-radius: 20px;
-    position: absolute;
+    position: relative;
     font-size: 0.7em;
     color: #DFDFDF;
     padding: 0px;
     float: right;
     margin-top: 15px;
     height: 15px;
-    display: tablecell;
 }
 
 .echo-message .check.read{
