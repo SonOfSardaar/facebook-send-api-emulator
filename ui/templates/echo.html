@@ -1,3 +1,4 @@
 ﻿<div>
     <span class="bubble">{{message.text}}</span>
+    <span class="check" ng-if="message.sent || message.read" ng-class="{'read':message.read}">✔</span>
 </div>

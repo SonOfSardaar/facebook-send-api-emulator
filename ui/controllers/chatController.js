@@ -7,6 +7,19 @@ module.exports = function ($http, $scope, config) {
 
     showMessage("Connecting...");
 
+    function markLastMessageAsSeen(){
+        var echos=$scope.messages.filter(x=> {return x.type.endsWith("echo")});
+
+        echos.forEach((x,i) => {
+            delete x.sent;
+            delete x.read;
+
+            if(i < echos.length - 1) return;
+            
+            x.read=true;
+        });
+    }
+
     socket.onmessage = function (event) {
         $scope
             .$apply(function (scope) {
@@ -27,12 +40,16 @@ module.exports = function ($http, $scope, config) {
                     showMessage("hello " + user.first_name);
                 }
 
-                $scope.quick_replies = [];
-                
                 $scope.sender_action=model.sender_action;
 
+                if(model.sender_action==="mark_seen")
+                    markLastMessageAsSeen();
+
+                   
                 if(!model.message) 
                     return;
+
+                $scope.quick_replies = [];
 
                 $scope
                     .messages
@@ -66,7 +83,8 @@ module.exports = function ($http, $scope, config) {
             .push(new ChatMessage({
                 message: {
                     type: "echo",
-                    text: text
+                    text: text,
+                    sent:true
                 }
             }).identify());
 
@@ -79,6 +97,7 @@ module.exports = function ($http, $scope, config) {
             .push(new ChatMessage({
                 message: {
                     type: "image-echo",
+                    sent:true,
                     attachment: {
                         type: "image",
                         payload: {
