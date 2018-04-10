@@ -49,8 +49,6 @@ module.exports = function ($http, $scope, config) {
                 if(!model.message) 
                     return;
 
-                $scope.quick_replies = [];
-
                 $scope
                     .messages
                     .push(new ChatMessage(model).identify($scope));
@@ -78,6 +76,7 @@ module.exports = function ($http, $scope, config) {
     }
 
     function echo(text) {
+        $scope.quick_replies = [];
         $scope
             .messages
             .push(new ChatMessage({
@@ -92,6 +91,7 @@ module.exports = function ($http, $scope, config) {
     }
 
     function echoImage(url) {
+        $scope.quick_replies = [];
         $scope
             .messages
             .push(new ChatMessage({
