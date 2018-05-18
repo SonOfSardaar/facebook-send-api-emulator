@@ -108,7 +108,7 @@ module.exports = function (app, config, chatWorker) {
 
     //Associate Label to PSID {user:PSID}
     app.post(`/${version}/:labelId/label`, function (request, response) {
-        console.log(request);
+        console.log(request.body);
         if(!request.params.labelId) throw "labelId missing from url"
 
         var label = database.addUserLabel(request.body.user, request.params.labelId);
@@ -117,7 +117,7 @@ module.exports = function (app, config, chatWorker) {
 
     //Remove Label from PSID {user:PSID}
     app.delete(`/${version}/:labelId/label`, function (request, response) {
-        console.log(request);
+        console.log(request.body);
         if(!request.params.labelId) throw "labelId missing from url"
 
         var label = database.removeUserLabel(request.body.user, request.params.labelId);
