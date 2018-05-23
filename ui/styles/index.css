@@ -237,6 +237,9 @@
 .echo-message .check.read{
     color:green;
     border: 1px solid green;
+	width: 1.3em;
+    display: inline-block;
+    text-align: center;
 }
 
 ._o46 {
