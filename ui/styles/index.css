@@ -232,14 +232,15 @@
     float: right;
     margin-top: 15px;
     height: 15px;
+	width: 1.3em;
+    display: inline-block;
+    text-align: center;
+	margin-right:-10px;
 }
 
 .echo-message .check.read{
     color:green;
-    border: 1px solid green;
-	width: 1.3em;
-    display: inline-block;
-    text-align: center;
+    border: 1px solid green;	
 }
 
 ._o46 {
