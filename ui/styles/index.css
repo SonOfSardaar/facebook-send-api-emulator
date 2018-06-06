@@ -128,7 +128,7 @@
 .chat-message {
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-right:5px;
+    margin-right:10px;
 }
 
 .button-template-message,
@@ -220,6 +220,27 @@
     height:40px;
     background-size: cover;
     background-position: center;
+}
+
+.echo-message .check{
+    border: 1px solid #DFDFDF;
+    border-radius: 20px;
+    position: relative;
+    font-size: 0.7em;
+    color: #DFDFDF;
+    padding: 0px;
+    float: right;
+    margin-top: 15px;
+    height: 15px;
+	width: 1.3em;
+    display: inline-block;
+    text-align: center;
+	margin-right:-10px;
+}
+
+.echo-message .check.read{
+    color:green;
+    border: 1px solid green;	
 }
 
 ._o46 {

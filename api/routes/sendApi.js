@@ -108,7 +108,7 @@ module.exports = function (app, config, chatWorker) {
 
     //Associate Label to PSID {user:PSID}
     app.post(`/${version}/:labelId/label`, function (request, response) {
-        console.log(request);
+        console.log(request.body);
         if(!request.params.labelId) throw "labelId missing from url"
 
         var label = database.addUserLabel(request.body.user, request.params.labelId);
@@ -117,7 +117,7 @@ module.exports = function (app, config, chatWorker) {
 
     //Remove Label from PSID {user:PSID}
     app.delete(`/${version}/:labelId/label`, function (request, response) {
-        console.log(request);
+        console.log(request.body);
         if(!request.params.labelId) throw "labelId missing from url"
 
         var label = database.removeUserLabel(request.body.user, request.params.labelId);
@@ -147,7 +147,7 @@ module.exports = function (app, config, chatWorker) {
     })
 
     //This is not Graph API url. This is local url to configure emulator.
-    app.get("/emulator/configuration", function (request, response) {        
+    app.get(`/${version}/emulator/configuration`, function (request, response) {        
         
         var model = {
             data: [{configuration:config}]
@@ -157,7 +157,7 @@ module.exports = function (app, config, chatWorker) {
     })
 
     //This is not Graph API url. This is local url to configure emulator.
-    app.put("/emulator/configuration", function (request, response) {
+    app.put(`/${version}/emulator/configuration`, function (request, response) {
         var {configuration} = request.body;
         Object.assign(config, configuration);
         database.saveData("configuration", configuration);
