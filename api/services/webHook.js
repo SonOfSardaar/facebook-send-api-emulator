@@ -26,8 +26,12 @@ const escapeUnicodeBuffer = function (buffer) {
         escaped += "\\u0025";
         break;
 
-      case "&":
+      case "@":
         escaped += "\\u0040";
+        break;
+
+      case "/":
+        escaped += "\/";
         break;
 
       default:
