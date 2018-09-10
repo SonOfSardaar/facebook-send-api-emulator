@@ -17,7 +17,7 @@ const infinityStones = [{
     detail:"Time Stone: a.k.a LOKI'S SCEPTER as seen in Age Of Ultron now on vision's forehead."
 }, {
     name: "soul",
-    detail:"Time Stone: Location of form still unknown"
+    detail:"Time Stone: Was in kept on planet Vormir under the watchful eye of the Red Skull"
 }];
 
 module.exports = {

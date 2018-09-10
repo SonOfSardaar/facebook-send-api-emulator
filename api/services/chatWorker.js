@@ -14,6 +14,10 @@ module.exports = function ChatWorker(server) {
             webHook.dispatch(object);
         })
 
+        socket.on("error",ex=>{
+            console.log(ex);
+        })
+
         base.sendInitialData();
     })
 
