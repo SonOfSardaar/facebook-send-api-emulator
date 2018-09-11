@@ -39,13 +39,5 @@ module.exports = function ChatWorker(server) {
 
             var json = JSON.stringify(model);
             base.socket.send(json);
-        },
-
-    base.sendActiveUser = function () {
-        var user = users.activeUser();
-        var data = {
-            user
-        };
-        base.send(data);
-    }
+        }
 }

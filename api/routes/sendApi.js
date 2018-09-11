@@ -13,9 +13,36 @@ module.exports = function (app, config, chatWorker) {
         response.send("OK");
     })
 
+    app.put("/user/:id/apps/:status", (request, response) => {
+        var status= request.params.status==="true";        
+        console.log("api=> toggling facebook apps to " + request.params.status);        
+        console.log("api=> toggling facebook apps to " + status);        
+        users.setFacebookAppsStatus(request.params.id, status)        
+        chatWorker.send({
+            user: users.activeUser()            
+        })
+        response.send("OK");
+    })
+
     app.get(`/${version}/:psid(\\d+)`, function (request, response) {
         var psid = request.params.psid;
         var user = users.get(psid);
+
+        if(user.appsEnabled===false)
+        {
+            var errorResponse={
+                error:{
+                    message:`Unsupported get request. Object with ID '${psid}' does not exist, cannot be loaded due to missing permissions, or does not support this operation`,
+                    type:"GraphMethodException",
+                    code:100,
+                    error_subcode:33,
+                    fbtrace_id:"DffrN+blrHw"
+                }
+            }
+            response.send(errorResponse);
+            return;    
+        }
+
         console.log("user resolved " + psid, user);
         response.send(user)
     })
@@ -127,7 +154,24 @@ module.exports = function (app, config, chatWorker) {
     //Retrieve a List of All Assosiated Labels
     app.get(`/${version}/:psid(\\d+)/custom_labels`, function (request, response) {
         console.log(request.body);
-        var labels=database.getUserLabels(request.params.psid);
+        var psid=request.params.psid;
+        var user=users.activeUser();
+        if(user.appsEnabled===false)
+        {
+            var errorResponse={
+                error:{
+                    message:`Unsupported get request. Object with ID '${psid}' does not exist, cannot be loaded due to missing permissions, or does not support this operation`,
+                    type:"GraphMethodException",
+                    code:100,
+                    error_subcode:33,
+                    fbtrace_id:"DrrrN+blrHw"
+                }
+            }
+            response.send(errorResponse);
+            return;    
+        }
+
+        var labels=database.getUserLabels(psid);
         response.send({data:labels});
     })
         

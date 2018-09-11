@@ -5,14 +5,16 @@ var users = {
         first_name: "John",
         last_name: "Doe",
         gender: "male",
-        active: true
+        active: true,
+        appsEnabled:true
     }, {
         index:2,
         id:"6666671847402514",
         first_name: "Jane",
         last_name: "Doe",
         gender: "female",
-        active: false
+        active: false,
+        appsEnabled:true
     }]
 };
 
@@ -39,6 +41,17 @@ users.activate = function (id) {
         .forEach(function (user) {
             user.active = user.index == id;
         });
+}
+
+users.setFacebookAppsStatus=function(id, status){
+    users.list
+    .forEach(function (user) {
+        if(user.index == id)
+            {
+                user.appsEnabled=status;
+                console.log("users=> user.appsEnabled updated to " + status);
+            }
+    });
 }
 
 module.exports = users
