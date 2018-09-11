@@ -39,7 +39,7 @@ module.exports = function (app, config, chatWorker) {
                     fbtrace_id:"DffrN+blrHw"
                 }
             }
-            response.send(errorResponse);
+            response.status(404).send(errorResponse);
             return;    
         }
 
@@ -167,7 +167,7 @@ module.exports = function (app, config, chatWorker) {
                     fbtrace_id:"DrrrN+blrHw"
                 }
             }
-            response.send(errorResponse);
+            response.status(404).send(errorResponse);
             return;    
         }
 
