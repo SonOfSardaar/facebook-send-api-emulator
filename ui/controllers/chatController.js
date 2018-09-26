@@ -36,8 +36,11 @@ module.exports = function ($http, $scope, config) {
 
                 if (model.user) {
                     var user = model.user
+                    user.toggleAppsTitle = user.appsEnabled ? "Disable Facebook Apps" : "Enable Facebook Apps";
                     $scope.user = user;
+                    console.log(user);
                     showMessage("hello " + user.first_name);
+                    showMessage("enable facebook apps: " + user.appsEnabled);
                 }
 
                 $scope.sender_action=model.sender_action;
@@ -160,6 +163,12 @@ module.exports = function ($http, $scope, config) {
         $http
             .put(config.serviceUrl + "/user/" + id)
             .then(function () {});
+    }
+
+    $scope.toggleFacebookApps = function () {        
+        var url=config.serviceUrl + "/user/" + $scope.user.index + "/apps/" + !$scope.user.appsEnabled;
+        console.log("putting data on url: " + url)
+        $http.put(url).then(function () {});                
     }
     
     $scope.sendMessage = sendMessage;

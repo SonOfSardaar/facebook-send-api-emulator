@@ -14,6 +14,10 @@ module.exports = function ChatWorker(server) {
             webHook.dispatch(object);
         })
 
+        socket.on("error",ex=>{
+            console.log(ex);
+        })
+
         base.sendInitialData();
     })
 
@@ -35,13 +39,5 @@ module.exports = function ChatWorker(server) {
 
             var json = JSON.stringify(model);
             base.socket.send(json);
-        },
-
-    base.sendActiveUser = function () {
-        var user = users.activeUser();
-        var data = {
-            user
-        };
-        base.send(data);
-    }
+        }
 }
