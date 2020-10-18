@@ -25,9 +25,11 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^2.30.1",
+    "mem": "^8.0.0",
     "nodemon": "^1.18.4",
     "style-loader": "^0.19.1",
-    "url-loader": "^0.6.2"
+    "url-loader": "^0.6.2",
+    "yargs-parser": "^20.2.3"
   },
   "dependencies": {
     "ajv": "^6.10.2",
