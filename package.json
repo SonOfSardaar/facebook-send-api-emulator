@@ -41,7 +41,7 @@
     "jquery": "^3.5.0",
     "js-yaml": "^3.13.1",
     "jsonfile": "^4.0.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "lowdb": "^1.0.0",
     "serialize-javascript": "^5.0.1",
     "shortid": "^2.2.13",
