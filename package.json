@@ -37,7 +37,7 @@
     "axios": "^0.21.2",
     "body-parser": "^1.18.3",
     "bootstrap": "^3.4.1",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "jquery": "^3.5.0",
     "js-yaml": "^3.13.1",
     "jsonfile": "^4.0.0",
